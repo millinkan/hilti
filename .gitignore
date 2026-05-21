@@ -1,0 +1,9 @@
+.idea/
+venv/
+__pycache__/
+*.pyc
+.claude/
+.DS_Store
+.venv/
+.git/
+.qodo/
