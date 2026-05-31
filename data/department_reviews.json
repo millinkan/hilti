@@ -1,0 +1,2409 @@
+{
+    "P-0001": {
+        "scores": {
+            "Finance": 2,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for BIM Training (P-0001).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            },
+            {
+                "dept": "Finance",
+                "user": "XG-Finance",
+                "score": 2,
+                "text": "I don't see a potential",
+                "time": "2026-05-19 08:26"
+            }
+        ]
+    },
+    "P-0002": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Leadership Pipeline (P-0002).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0003": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for TE 6-A36 Launch Push (P-0003).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0004": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for REACH Compliance Refresh (P-0004).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0005": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Solar Roof Schaan (P-0005).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0006": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0006).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0007": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Demand Forecasting AI (P-0007).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0008": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Inbound Carrier Rebid (P-0008).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0009": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Construction Pro Loyalty (P-0009).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0010": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Casting Yield Boost (P-0010).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0011": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0011).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0012": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Compliance E-Learning (P-0012).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0013": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Heavy-Duty Saw Series (P-0013).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0014": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Solar Roof Schaan (P-0014).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0015": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for On!Track Mobile Refresh (P-0015).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0016": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Heat Treatment Optimisation (P-0016).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0017": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Heavy-Duty Saw Series (P-0017).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0018": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Schaan Line Automation (P-0018).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0019": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Rotary Hammer Pro Line (P-0019).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0020": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for TE 6-A36 Launch Push (P-0020).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0021": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for GDPR Data Pipeline (P-0021).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0022": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Smart Factory Initiative (P-0022).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0023": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Battery Trade-In Drive (P-0023).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0024": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Influencer Roof Series (P-0024).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0025": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Rotary Hammer Pro Line (P-0025).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0026": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Data Lake Foundation (P-0026).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0027": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0027).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0028": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Influencer Roof Series (P-0028).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0029": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Field Service App (P-0029).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0030": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for PCB Test Automation (P-0030).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0031": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0031).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0032": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Fleet Management Portal (P-0032).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0033": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Global CRM Rollout (P-0033).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0034": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Schaan Line Automation (P-0034).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0035": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Connected Tools Platform (P-0035).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0036": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Customer Self-Service Hub (P-0036).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0037": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Digital Tools Onboarding (P-0037).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0038": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Fleet Management Portal (P-0038).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0039": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Assembly Cell Redesign (P-0039).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0040": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Influencer Roof Series (P-0040).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0041": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Solar Roof Schaan (P-0041).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0042": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Direct-Ship Programme (P-0042).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0043": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Global CRM Rollout (P-0043).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0044": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Cordless Drill Gen-7 (P-0044).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0045": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Kaufering Quality Gate (P-0045).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0046": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Diamond Coring System (P-0046).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0047": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Direct-Ship Programme (P-0047).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0048": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Apprenticeship Programme (P-0048).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0049": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Battery Platform 2.0 (P-0049).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0050": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Cordless Drill Gen-7 (P-0050).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0051": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Spare Parts Network (P-0051).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0052": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Carbon Footprint Reporting (P-0052).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0053": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Quoting Engine v2 (P-0053).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0054": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Supplier Quality Portal (P-0054).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0055": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Cordless Drill Gen-7 (P-0055).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0056": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Supplier Quality Portal (P-0056).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0057": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Battery Take-Back Programme (P-0057).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0058": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0058).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0059": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Builders Campaign (P-0059).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0060": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Influencer Roof Series (P-0060).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0061": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Compliance E-Learning (P-0061).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0062": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Warehouse Consolidation (P-0062).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0063": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Rotary Hammer Pro Line (P-0063).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0064": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for BIM Integration Suite (P-0064).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0065": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Quoting Engine v2 (P-0065).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0066": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Smart Factory Initiative (P-0066).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0067": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for EU Builders Campaign (P-0067).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0068": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Carbon Footprint Reporting (P-0068).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0069": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Battery Platform 2.0 (P-0069).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0070": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Leadership Pipeline (P-0070).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0071": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Field Service App (P-0071).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0072": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Anchor Setting Tool (P-0072).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0073": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for TE 6-A36 Launch Push (P-0073).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0074": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Vendor Managed Inventory (P-0074).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0075": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Cordless Drill Gen-7 (P-0075).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0076": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for On!Track Mobile Refresh (P-0076).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0077": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Diamond Coring System (P-0077).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0078": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Surface Coating Upgrade (P-0078).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0079": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Digital Lead-Gen Sprint (P-0079).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0080": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Cordless Drill Gen-7 (P-0080).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0081": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for S&OP Process Redesign (P-0081).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0082": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Direct-Ship Programme (P-0082).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0083": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Schaan Line Automation (P-0083).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0084": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Predictive Maintenance Cloud (P-0084).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0085": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Rotary Hammer Pro Line (P-0085).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0086": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Kaufering Quality Gate (P-0086).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0087": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Conflict Minerals Tracking (P-0087).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0088": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Carbon Footprint Reporting (P-0088).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0089": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Rotary Hammer Pro Line (P-0089).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0090": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Data Lake Foundation (P-0090).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0091": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Packaging Throughput (P-0091).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0092": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Digital Lead-Gen Sprint (P-0092).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0093": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Heavy-Duty Saw Series (P-0093).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0094": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Customer Self-Service Hub (P-0094).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0095": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 7,
+            "Operations": 7
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 7,
+                "text": "Initial scheduling analysis shows moderate resource overlap for GDPR Data Pipeline (P-0095).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0096": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for BIM Training (P-0096).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0097": {
+        "scores": {
+            "Finance": 8,
+            "IT/R&D": 7,
+            "Sales/Marketing": 6,
+            "Operations": 6
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 6,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Energy Audit EU Plants (P-0097).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 8,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0098": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Vendor Managed Inventory (P-0098).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0099": {
+        "scores": {
+            "Finance": 7,
+            "IT/R&D": 9,
+            "Sales/Marketing": 9,
+            "Operations": 5
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 5,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Quoting Engine v2 (P-0099).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 7,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    },
+    "P-0100": {
+        "scores": {
+            "Finance": 6,
+            "IT/R&D": 8,
+            "Sales/Marketing": 8,
+            "Operations": 8
+        },
+        "comments": [
+            {
+                "dept": "Operations",
+                "user": "SysAdmin",
+                "score": 8,
+                "text": "Initial scheduling analysis shows moderate resource overlap for Assembly Cell Redesign (P-0100).",
+                "time": "2026-05-17 14:00"
+            },
+            {
+                "dept": "Finance",
+                "user": "Finance Director",
+                "score": 6,
+                "text": "Aligned with Hilti standard corporate margin goals.",
+                "time": "2026-05-17 14:30"
+            }
+        ]
+    }
+}
