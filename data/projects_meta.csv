@@ -1,0 +1,101 @@
+project_id,name,archetype,duration_months,fte_cost_monthly
+P-0001,BIM Training (P-0001),Training & Enablement,8,12044.558807961412
+P-0002,Leadership Pipeline (P-0002),Training & Enablement,10,9757.885436337143
+P-0003,TE 6-A36 Launch Push (P-0003),Marketing Campaign,2,11634.114574898544
+P-0004,REACH Compliance Refresh (P-0004),Sustainability / Compliance,14,13889.437402385802
+P-0005,Solar Roof Schaan (P-0005),Sustainability / Compliance,9,12319.444849331141
+P-0006,EU Warehouse Consolidation (P-0006),Supply Chain Optimization,13,13637.690538767607
+P-0007,Demand Forecasting AI (P-0007),Supply Chain Optimization,17,12241.294691600378
+P-0008,Inbound Carrier Rebid (P-0008),Supply Chain Optimization,9,11421.1123194165
+P-0009,Construction Pro Loyalty (P-0009),Marketing Campaign,6,13333.834215154238
+P-0010,Casting Yield Boost (P-0010),Manufacturing Process Improvement,5,11517.856318907716
+P-0011,EU Warehouse Consolidation (P-0011),Supply Chain Optimization,17,14743.759290802504
+P-0012,Compliance E-Learning (P-0012),Training & Enablement,9,11353.031999876883
+P-0013,Heavy-Duty Saw Series (P-0013),Tool R&D,20,11286.159700766302
+P-0014,Solar Roof Schaan (P-0014),Sustainability / Compliance,18,13289.831732488463
+P-0015,On!Track Mobile Refresh (P-0015),Software Platform,21,14335.81656817069
+P-0016,Heat Treatment Optimisation (P-0016),Manufacturing Process Improvement,12,13467.205753047707
+P-0017,Heavy-Duty Saw Series (P-0017),Tool R&D,35,14386.436996821985
+P-0018,Schaan Line Automation (P-0018),Manufacturing Process Improvement,6,12032.6694232515
+P-0019,Rotary Hammer Pro Line (P-0019),Tool R&D,18,14100.746433141481
+P-0020,TE 6-A36 Launch Push (P-0020),Marketing Campaign,2,12654.484186641408
+P-0021,GDPR Data Pipeline (P-0021),Sustainability / Compliance,17,13058.332207542124
+P-0022,Smart Factory Initiative (P-0022),Digital Transformation,27,12977.22900332733
+P-0023,Battery Trade-In Drive (P-0023),Marketing Campaign,4,13808.998863382734
+P-0024,Influencer Roof Series (P-0024),Marketing Campaign,5,10611.508488505344
+P-0025,Rotary Hammer Pro Line (P-0025),Tool R&D,25,15609.262250774977
+P-0026,Data Lake Foundation (P-0026),Digital Transformation,34,14004.667601752533
+P-0027,EU Warehouse Consolidation (P-0027),Supply Chain Optimization,13,12029.807837295853
+P-0028,Influencer Roof Series (P-0028),Marketing Campaign,5,11541.477923428412
+P-0029,Field Service App (P-0029),Software Platform,16,12241.910957845039
+P-0030,PCB Test Automation (P-0030),Manufacturing Process Improvement,11,11804.18600074102
+P-0031,EU Warehouse Consolidation (P-0031),Supply Chain Optimization,9,14515.054479130158
+P-0032,Fleet Management Portal (P-0032),Software Platform,20,15140.760617470758
+P-0033,Global CRM Rollout (P-0033),Digital Transformation,29,15260.973570479164
+P-0034,Schaan Line Automation (P-0034),Manufacturing Process Improvement,8,13127.02819029578
+P-0035,Connected Tools Platform (P-0035),Digital Transformation,33,16563.2761363792
+P-0036,Customer Self-Service Hub (P-0036),Software Platform,9,13269.908085342715
+P-0037,Digital Tools Onboarding (P-0037),Training & Enablement,3,10855.312441851505
+P-0038,Fleet Management Portal (P-0038),Software Platform,15,15697.431645030345
+P-0039,Assembly Cell Redesign (P-0039),Manufacturing Process Improvement,4,13151.17140255549
+P-0040,Influencer Roof Series (P-0040),Marketing Campaign,4,13780.593150683091
+P-0041,Solar Roof Schaan (P-0041),Sustainability / Compliance,14,11806.139901569533
+P-0042,Direct-Ship Programme (P-0042),Supply Chain Optimization,14,12230.66186551612
+P-0043,Global CRM Rollout (P-0043),Digital Transformation,27,14591.67396600289
+P-0044,Cordless Drill Gen-7 (P-0044),Tool R&D,26,13747.468064000292
+P-0045,Kaufering Quality Gate (P-0045),Manufacturing Process Improvement,9,13406.888731010074
+P-0046,Diamond Coring System (P-0046),Tool R&D,21,13071.768859971806
+P-0047,Direct-Ship Programme (P-0047),Supply Chain Optimization,8,14906.108265660583
+P-0048,Apprenticeship Programme (P-0048),Training & Enablement,5,11854.34643962967
+P-0049,Battery Platform 2.0 (P-0049),Tool R&D,24,12639.619417653521
+P-0050,Cordless Drill Gen-7 (P-0050),Tool R&D,24,11337.636572090267
+P-0051,Spare Parts Network (P-0051),Supply Chain Optimization,10,11371.141816506957
+P-0052,Carbon Footprint Reporting (P-0052),Sustainability / Compliance,11,11019.429351109116
+P-0053,Quoting Engine v2 (P-0053),Software Platform,10,15960.574159369682
+P-0054,Supplier Quality Portal (P-0054),Supply Chain Optimization,18,12053.269129025943
+P-0055,Cordless Drill Gen-7 (P-0055),Tool R&D,25,11989.903732084535
+P-0056,Supplier Quality Portal (P-0056),Supply Chain Optimization,13,14693.210761031514
+P-0057,Battery Take-Back Programme (P-0057),Sustainability / Compliance,17,13342.415045862319
+P-0058,EU Warehouse Consolidation (P-0058),Supply Chain Optimization,18,11778.51284641969
+P-0059,EU Builders Campaign (P-0059),Marketing Campaign,6,10837.109390287804
+P-0060,Influencer Roof Series (P-0060),Marketing Campaign,4,10983.92407276248
+P-0061,Compliance E-Learning (P-0061),Training & Enablement,3,10141.247974396854
+P-0062,EU Warehouse Consolidation (P-0062),Supply Chain Optimization,8,13755.00885103968
+P-0063,Rotary Hammer Pro Line (P-0063),Tool R&D,22,11013.536368378936
+P-0064,BIM Integration Suite (P-0064),Software Platform,21,16015.177827615758
+P-0065,Quoting Engine v2 (P-0065),Software Platform,18,15890.268940448563
+P-0066,Smart Factory Initiative (P-0066),Digital Transformation,23,12345.606302273849
+P-0067,EU Builders Campaign (P-0067),Marketing Campaign,3,12603.249060176138
+P-0068,Carbon Footprint Reporting (P-0068),Sustainability / Compliance,11,13441.629277733893
+P-0069,Battery Platform 2.0 (P-0069),Tool R&D,29,13853.653030601232
+P-0070,Leadership Pipeline (P-0070),Training & Enablement,5,12750.821730143918
+P-0071,Field Service App (P-0071),Software Platform,13,16406.63187890406
+P-0072,Anchor Setting Tool (P-0072),Tool R&D,33,14390.05777085898
+P-0073,TE 6-A36 Launch Push (P-0073),Marketing Campaign,5,10171.900502587596
+P-0074,Vendor Managed Inventory (P-0074),Supply Chain Optimization,8,11134.439876745004
+P-0075,Cordless Drill Gen-7 (P-0075),Tool R&D,21,13730.270333740398
+P-0076,On!Track Mobile Refresh (P-0076),Software Platform,18,11217.83405662685
+P-0077,Diamond Coring System (P-0077),Tool R&D,19,11770.954410948158
+P-0078,Surface Coating Upgrade (P-0078),Manufacturing Process Improvement,7,12257.184823317546
+P-0079,Digital Lead-Gen Sprint (P-0079),Marketing Campaign,5,12829.068776781363
+P-0080,Cordless Drill Gen-7 (P-0080),Tool R&D,25,11821.893629622218
+P-0081,S&OP Process Redesign (P-0081),Supply Chain Optimization,15,13004.836534153857
+P-0082,Direct-Ship Programme (P-0082),Supply Chain Optimization,14,11988.270349122877
+P-0083,Schaan Line Automation (P-0083),Manufacturing Process Improvement,10,11694.341393179146
+P-0084,Predictive Maintenance Cloud (P-0084),Software Platform,18,14474.919115183879
+P-0085,Rotary Hammer Pro Line (P-0085),Tool R&D,27,15801.13002261484
+P-0086,Kaufering Quality Gate (P-0086),Manufacturing Process Improvement,11,12824.976446732988
+P-0087,Conflict Minerals Tracking (P-0087),Sustainability / Compliance,16,12600.266225671505
+P-0088,Carbon Footprint Reporting (P-0088),Sustainability / Compliance,14,13433.20302788546
+P-0089,Rotary Hammer Pro Line (P-0089),Tool R&D,29,12100.655401165475
+P-0090,Data Lake Foundation (P-0090),Digital Transformation,32,13687.891043243297
+P-0091,Packaging Throughput (P-0091),Manufacturing Process Improvement,4,12323.485393745528
+P-0092,Digital Lead-Gen Sprint (P-0092),Marketing Campaign,5,13156.213118428586
+P-0093,Heavy-Duty Saw Series (P-0093),Tool R&D,25,11587.398429552723
+P-0094,Customer Self-Service Hub (P-0094),Software Platform,18,14070.934333428544
+P-0095,GDPR Data Pipeline (P-0095),Sustainability / Compliance,15,13203.326660121067
+P-0096,BIM Training (P-0096),Training & Enablement,8,9472.523401116296
+P-0097,Energy Audit EU Plants (P-0097),Sustainability / Compliance,17,12756.390245209504
+P-0098,Vendor Managed Inventory (P-0098),Supply Chain Optimization,10,14511.655106352027
+P-0099,Quoting Engine v2 (P-0099),Software Platform,9,12427.012309290747
+P-0100,Assembly Cell Redesign (P-0100),Manufacturing Process Improvement,4,11285.602720569907
