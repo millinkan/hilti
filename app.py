@@ -294,7 +294,7 @@ with st.sidebar:
         
         st.divider()
         st.subheader("Prioritization Algorithm")
-        prio_method = st.selectbox("Select Method", ["Composite", "WSJF", "ROI"], help="WSJF: Value/Duration. ROI: Value/Cost. Composite: Weighted NP + Speed.")
+        prio_method = st.selectbox("Select Method", ["Composite", "Hilti Value Creation Rating", "ROI"], help="Hilti Value Creation Rating: Net Profit / Duration (Hilti's official formula). ROI: Net Profit / Cost. Composite: weighted Net Profit + break-even speed.")
 
         st.divider()
         st.subheader("Estimation Cost Buffer")
@@ -554,30 +554,52 @@ def _render_highlevel_add(projects: list[Project]) -> None:
 # --------------------------------------------------------------------------
 
 if current_page == 'Portfolio Overview':
-    # Scheduler-selected projects drive the portfolio-level views
-    selected_ranked_df = ranked_df[ranked_df["project_id"].isin(selected_ids)]
+    # --- The key chart: prioritization visualised as net-profit-over-time ---
+    st.markdown("##### Prioritization — Cumulative Net Profit over Time")
+    max_top = min(25, len(ranked))
+    default_top = min(10, max_top)
+    top_n_chart = st.slider("Show top N projects by priority", 5, max(5, max_top), default_top, key="overview_topn")
+    top = ranked[:top_n_chart]
 
-    st.markdown("##### Total Cost vs Business Value (Selected Portfolio)")
-    if len(selected_ranked_df) == 0:
-        st.info("No projects fit the current constraints. Please relax the budget or concurrency limits in the sidebar.")
+    if len(top) > 1:
+        intensities = list(np.linspace(0.92, 0.40, len(top)))   # rank 1 = deepest red
+        colors = px.colors.sample_colorscale("YlOrRd", intensities)
     else:
-        fig_bubble = px.scatter(
-            selected_ranked_df, x="total_cost", y="total_business_value",
-            size="duration_months", color="archetype",
-            hover_name="name", hover_data=["rank", "break_even_month"],
-            title="Total Cost vs. Business Value (Bubble size = Duration)",
-            labels={"total_cost": f"Total Cost ({CURRENCY})", "total_business_value": f"Total Business Value ({CURRENCY})"},
-            color_discrete_sequence=px.colors.qualitative.Bold
-        )
-        max_val = max(selected_ranked_df["total_cost"].max(), selected_ranked_df["total_business_value"].max())
-        if pd.isna(max_val) or max_val <= 0:
-            max_val = 1000000.0
-        fig_bubble.add_shape(
-            type="line", x0=0, y0=0, x1=max_val, y1=max_val,
-            line=dict(color="gray", dash="dash"), opacity=0.5
-        )
-        fig_bubble.update_layout(margin=dict(t=40, b=20, l=20, r=20))
-        st.plotly_chart(fig_bubble, use_container_width=True)
+        colors = ["#D2051E"]
+
+    fig_prio = go.Figure()
+    for idx, sp in enumerate(top):
+        p = sp.project
+        months = list(range(1, p.duration_months + 1))
+        cum = p.cumulative_net_profit
+        funded = p.project_id in selected_ids
+        color = colors[idx]
+        fig_prio.add_trace(go.Scatter(
+            x=months, y=cum, mode="lines",
+            line=dict(color=color, width=2.5, dash="solid" if funded else "dash"),
+            name=f"#{sp.rank} {p.name}",
+            hovertemplate=(f"<b>#{sp.rank} {p.name}</b><br>"
+                           f"{'Funded' if funded else 'Not funded'} • break-even mo "
+                           f"{sp.break_even_month or '—'}<br>"
+                           f"Month %{{x}}<br>Cumulative NP: %{{y:,.0f}} {CURRENCY}<extra></extra>"),
+            showlegend=False,
+        ))
+        # circled rank badge at the end of each line
+        fig_prio.add_trace(go.Scatter(
+            x=[months[-1]], y=[cum[-1]], mode="markers+text",
+            marker=dict(size=24, color="white", line=dict(color=color, width=2.5)),
+            text=[str(sp.rank)], textposition="middle center",
+            textfont=dict(color=color, size=11, family="Arial Black"),
+            showlegend=False, hoverinfo="skip",
+        ))
+    fig_prio.add_hline(y=0, line_dash="dash", line_color="gray", opacity=0.5)
+    fig_prio.update_layout(
+        title=f"Cumulative Net Profit of the Top {len(top)} Prioritized Projects ({prio_method})",
+        xaxis_title="Month", yaxis_title=f"Cumulative Net Profit ({CURRENCY})",
+        height=500, margin=dict(t=50, b=20, l=20, r=30),
+    )
+    st.plotly_chart(fig_prio, use_container_width=True)
+    st.caption("Each line tracks a project's net profit accumulating over its lifetime; the **circled number is its priority rank**. **Solid** = funded under the current budget, **dashed** = not funded. Higher-priority projects generally climb higher and/or reach profit (cross zero) sooner.")
 
     st.divider()
     st.subheader("Prioritized projects")
@@ -589,11 +611,7 @@ if current_page == 'Portfolio Overview':
             default=sorted(ranked_df["archetype"].unique()),
         )
     with c_filt2:
-        min_dur = int(ranked_df["duration_months"].min())
-        max_dur = int(ranked_df["duration_months"].max())
-        if min_dur == max_dur:
-            max_dur += 1
-        duration_range = st.slider("Duration (months)", min_dur, max_dur, (min_dur, max_dur))
+        duration_range = st.slider("Duration (months)", 1, 60, (1, 60))
     with c_filt3:
         min_np = float(ranked_df["total_net_profit"].min())
         max_np = float(ranked_df["total_net_profit"].max())
@@ -878,7 +896,7 @@ elif current_page == 'Execution Strategy':
     st.markdown("### 🔬 Prioritization Method Comparison")
     st.caption(f"Which prioritization method delivers the highest **total net profit** under the current execution mode (**{execution_mode}**) and constraints? Total net profit is the decisive metric.")
     method_rows = []
-    for m in ["Composite", "WSJF", "ROI"]:
+    for m in ["Composite", "Hilti Value Creation Rating", "ROI"]:
         ranked_m = score_projects(projects, weight_value=weight_value, weight_speed=weight_speed, method=m)
         sched_m = schedule_portfolio(ranked_m, mode=execution_mode, budget=total_budget,
                                      max_concurrency=max_concurrency, parallel_spending=max_monthly_spend)
@@ -887,7 +905,8 @@ elif current_page == 'Execution Strategy':
         cost_m = sum(s.scored.project.total_cost for s in sched_m)
         roi_m = (np_m / cost_m * 100) if cost_m > 0 else 0.0
         dur_m = max((s.end_month for s in sched_m), default=0)
-        method_rows.append({"Method": m, "_np": np_m, "Selected": len(sched_m),
+        short = {"Hilti Value Creation Rating": "Hilti VCR"}.get(m, m)
+        method_rows.append({"Method": short, "_np": np_m, "Selected": len(sched_m),
                             "Total Cost": cost_m, "ROI (%)": roi_m, "Timeline (mo)": dur_m})
     df_methods = pd.DataFrame(method_rows)
     best_idx = df_methods["_np"].idxmax()
@@ -999,7 +1018,7 @@ elif current_page == 'Execution Strategy':
             st.plotly_chart(fig_spend_compare, use_container_width=True)
         else:
             st.caption("No budget consumption data available.")
-    st.markdown("### 🕹️ Parallel Execution Timeline (Gantt)")
+    st.markdown("### Execution Timeline (Gantt)")
     active_sched = par_sched if execution_mode == "Parallel" else seq_sched
     if active_sched:
         gantt_data = []
@@ -1146,26 +1165,45 @@ elif current_page == 'User Guide':
     st.markdown("""
     Welcome to the **Hilti Project Prioritization & Optimization Platform**. This cockpit provides strategic portfolio governance, interactive side-by-side simulations, cross-departmental alignment, and on-demand AI consulting.
     """)
-    with st.expander("🧮 Prioritization Methodology & Formulas", expanded=True):
+    
+    with st.expander("Platform Navigation & Feature Guide", expanded=True):
+        st.markdown("""
+        The platform is divided into sections, accessible via the sidebar navigation:
+        
+        * **Portfolio Overview**: A high-level view of the selected portfolio. Includes cost vs. business value visualization (bubble chart) and the main prioritized projects table. You can filter by Archetype, Duration, and Net Profit, and download the filtered list as a CSV.
+        * **Project Details**: Deep dive into individual project metrics over time (FTE count, direct costs, effort costs, cumulative net profit) and overall portfolio composition analysis.
+        * **Risk Simulation**: Runs Monte Carlo simulations on the entire selected portfolio or individual projects to stress-test financial outcomes under business value and cost uncertainty.
+        * **Robustness**: Examines sensitivity to inputs (Tornado chart) and rank stability under uncertainty (Spearman correlation and Top-N retention) to assess how reliable the prioritized order remains.
+        * **Execution Strategy**: Compares prioritization methods (Composite vs. WSJF vs. ROI) and execution scenarios (Sequential vs. Parallel execution) side-by-side to optimize cumulative net profit.
+        * **Department Alignment**: Tracks cross-functional alignment and buy-in across Finance, IT/R&D, Sales/Marketing, and Operations using a radar chart and Org Alignment Score (OAS), and hosts a collaborative discussion workspace.
+        * **Add Project**: Allows adding custom projects using a Detailed monthly grid editor or a High-level estimates generator with customizable value shape curves.
+        * **Copilot**: An interactive AI Assistant capable of comparing projects, explaining prioritization drivers, and running instant what-if budget scenarios.
+        """)
+
+    with st.expander("Prioritization Methodology & Formulas", expanded=False):
         st.markdown(r"""
+        The platform supports three distinct prioritization algorithms:
+        
         #### 1. Composite Score (Hilti Default)
         The Composite Score blends financial yield and time-to-value speed:
         $$\text{Composite Score} = w_{\text{profit}} \cdot \text{Normalized Net Profit} + w_{\text{speed}} \cdot \text{Speed Factor}$$
         Where:
         - $\text{Normalized Net Profit}$ is the min-max normalized total net profit across the portfolio.
-        - $\text{Speed Factor}$ is calculated from the Break-Even speed: $1 - \frac{\text{Break-Even Month}}{\text{Duration}}$.
+        - $\text{Speed Factor}$ is calculated from the Break-Even speed: $\max\left(0, 1 - \frac{\text{Break-Even Month} - 1}{\text{Duration}}\right)$; projects that never break even score $0$.
+        - $w_{\text{profit}}$ and $w_{\text{speed}}$ are adjustable weights configured in the sidebar.
         
-        #### 2. Weighted Shortest Job First (WSJF)
-        WSJF prioritizes high-value, fast-turnaround projects to optimize cost of delay:
-        $$\text{WSJF} = \frac{\text{Business Value}}{\text{Duration}}$$
+        #### 2. Hilti Value Creation Rating
+        Hilti's official priority formula — net profit generated per unit of time:
+        $$\text{Value Creation Rating} = \frac{\text{Net Profit}}{\text{Duration}} = \frac{\text{Business Value} - \text{Costs}}{\text{Duration}}$$
         
         #### 3. Return on Investment (ROI)
         ROI ranks projects based on financial cost-efficiency:
         $$\text{ROI} = \frac{\text{Total Net Profit}}{\text{Total Cost}}$$
         """)
-    with st.expander("⏳ Multi-Constraint Portfolio Optimization & Parallel Scheduling"):
+        
+    with st.expander("Multi-Constraint Portfolio Optimization & Parallel Scheduling", expanded=False):
         st.markdown(r"""
-        Under the **Execution Strategy** page, the platform schedules projects dynamically:
+        Under the **Execution Strategy** page, the platform schedules projects dynamically based on resource and cash flow constraints:
         
         - **Total Available Budget Constraint**:
           $$\sum_{i \in \text{Selected}} \text{Total Cost}_i \le \text{Total Budget}$$
@@ -1174,11 +1212,53 @@ elif current_page == 'User Guide':
         - **Concurrency Constraint**:
           $$|\text{Active}(t)| \le \text{Max Concurrency Limit}$$
           
-        *Note: In Parallel mode, the algorithm operates greedily down the priority list, dynamically sliding projects to start as early as possible without violating any overlapping monthly spend or concurrency constraints.*
+        *Note: In Parallel mode, the scheduling algorithm operates greedily down the priority list, dynamically sliding projects to start as early as possible (from Month 1 onwards) without violating the overlapping monthly spend or concurrency constraints.*
+        """)
+
+    with st.expander("Risk & Robustness Analysis Methodology", expanded=False):
+        st.markdown(r"""
+        To deal with estimation uncertainty, the platform provides advanced simulation features:
+        
+        #### 1. Monte Carlo Risk Simulation
+        We apply random perturbations to monthly business value and monthly costs:
+        - $\text{Value}_t \sim \text{Normal}(\mu_v, \sigma_v)$
+        - $\text{Cost}_t \sim \text{Normal}(\mu_c, \sigma_c)$
+        
+        Key Outputs:
+        - **P10 (Worst Case)**: 10% probability that the net profit will fall below this value.
+        - **P50 (Expected)**: Median outcome of the simulation.
+        - **P90 (Best Case)**: 90% probability that the net profit will be below this value (or 10% chance to exceed it).
+        - **Probability of Loss**: The percentage of iterations where cumulative net profit is less than 0.
+        
+        #### 2. Sensitivity Analysis (Tornado Chart)
+        Measures the impact of a $\pm X\%$ shift in each driver (Value, Direct Cost, FTE Cost, Concurrency limit, etc.) on the total portfolio net profit. Drivers are ordered by the magnitude of their swing.
+        
+        #### 3. Rank Stability
+        Runs multiple prioritization passes under random variance and calculates:
+        - **Spearman Rank Correlation**: Average correlation coefficient between the baseline priority list and the perturbed lists (value close to 1.0 indicates stable priority order).
+        - **Top-N Retention**: The average percentage of baseline Top-N projects that remain in the Top-N after random noise is applied.
+        """)
+
+    with st.expander("Interdepartmental Alignment Score (OAS)", expanded=False):
+        st.markdown(r"""
+        Successful implementation requires buy-in from multiple departments. The **Department Alignment** page aggregates buy-in scores (1-10 scale) from four core business units:
+        
+        - **Finance**: Evaluates NPV, ROI, and budget alignment.
+        - **IT/R&D**: Evaluates technical feasibility and resource capacity.
+        - **Sales/Marketing**: Evaluates commercial readiness and customer value.
+        - **Operations**: Evaluates delivery complexity and supply chain impact.
+        
+        The **Org Alignment Score (OAS)** is the average of these ratings:
+        $$\text{OAS} = \frac{\text{Finance} + \text{IT/R\&D} + \text{Sales/Marketing} + \text{Operations}}{4}$$
+        
+        OAS thresholds:
+        - **OAS $\ge 8.0$**: Strong Alignment
+        - **$6.0 \le$ OAS $< 8.0$**: Moderate Alignment
+        - **OAS $< 6.0$**: Needs Review
         """)
 
 elif current_page == 'Copilot':
-    st.subheader("🤖 Hilti Portfolio Copilot (Phase 3)")
+    st.subheader("🤖 Hilti Portfolio Copilot")
     st.caption("Ask me about project performance, constraints, and what-if scenarios.")
     
     # Initialize chat history in session state
@@ -1371,3 +1451,679 @@ components.html('''
     });
 </script>
 ''', height=0, width=0)
+
+# --------------------------------------------------------------------------
+# Guided Tour Help Button
+# --------------------------------------------------------------------------
+components.html('''
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  /* ── Floating Help Button ─────────────────────────────────────────── */
+  #hilti-help-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 99999;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D2051E 0%, #8B0012 100%);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(210,5,30,0.55), 0 2px 8px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    user-select: none;
+  }
+  #hilti-help-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 6px 28px rgba(210,5,30,0.70), 0 3px 12px rgba(0,0,0,0.45);
+  }
+  #hilti-help-btn:active { transform: scale(0.96); }
+
+  /* Pulse ring on idle */
+  #hilti-help-btn::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid rgba(210,5,30,0.5);
+    animation: pulse-ring 2.2s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.95); opacity: 0.8; }
+    70%  { transform: scale(1.25); opacity: 0; }
+    100% { transform: scale(1.25); opacity: 0; }
+  }
+
+  /* ── Tour Backdrop ────────────────────────────────────────────────── */
+  #tour-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    z-index: 99998;
+    backdrop-filter: blur(3px);
+    animation: fade-in 0.25s ease;
+  }
+  @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+
+  /* ── Tour Card ────────────────────────────────────────────────────── */
+  #tour-card {
+    position: fixed;
+    z-index: 100000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.92);
+    width: min(560px, 92vw);
+    background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    border: 1px solid rgba(210,5,30,0.35);
+    border-radius: 20px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    opacity: 0;
+    transition: opacity 0.28s ease, transform 0.28s cubic-bezier(.34,1.56,.64,1);
+  }
+  #tour-card.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Card header strip */
+  #tour-header {
+    background: linear-gradient(90deg, #D2051E 0%, #8B0012 100%);
+    padding: 14px 22px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #tour-header-left { display: flex; align-items: center; gap: 10px; }
+  #tour-step-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  #tour-title {
+    font-size: 1rem; font-weight: 700; color: #fff;
+    letter-spacing: 0.3px;
+  }
+  #tour-subtitle {
+    font-size: 0.72rem; color: rgba(255,255,255,0.72);
+    letter-spacing: 1px; text-transform: uppercase; margin-top: 1px;
+  }
+  #tour-close-x {
+    background: rgba(255,255,255,0.15);
+    border: none; color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%; font-size: 0.9rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  #tour-close-x:hover { background: rgba(255,255,255,0.28); }
+
+  /* Progress bar */
+  #tour-progress-wrap {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+  }
+  #tour-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #D2051E);
+    transition: width 0.4s ease;
+  }
+
+  /* Body */
+  #tour-body {
+    padding: 28px 26px 20px;
+  }
+  #tour-step-badge {
+    display: inline-block;
+    background: rgba(210,5,30,0.18);
+    border: 1px solid rgba(210,5,30,0.4);
+    color: #ff6b6b;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    border-radius: 20px;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+  #tour-desc {
+    color: rgba(255,255,255,0.90);
+    font-size: 0.97rem;
+    line-height: 1.65;
+    min-height: 80px;
+  }
+  #tour-tip {
+    margin-top: 14px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid rgba(210,5,30,0.6);
+    border-radius: 0 8px 8px 0;
+    padding: 9px 14px;
+    color: rgba(255,255,255,0.60);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    display: none;
+  }
+
+  /* Dot indicators */
+  #tour-dots {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 4px 26px 0;
+    flex-wrap: wrap;
+  }
+  .tour-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    transition: background 0.25s, transform 0.25s;
+    cursor: pointer;
+  }
+  .tour-dot.active {
+    background: #D2051E;
+    transform: scale(1.4);
+  }
+  .tour-dot.done {
+    background: rgba(210,5,30,0.45);
+  }
+
+  /* Footer buttons */
+  #tour-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 26px 22px;
+    gap: 12px;
+  }
+  #tour-skip-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: inherit;
+  }
+  #tour-skip-btn:hover {
+    border-color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.8);
+  }
+  #tour-nav { display: flex; gap: 10px; align-items: center; }
+  #tour-prev-btn {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.65);
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: inherit;
+  }
+  #tour-prev-btn:hover:not(:disabled) {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+  }
+  #tour-prev-btn:disabled { opacity: 0.28; cursor: default; }
+  #tour-next-btn {
+    background: linear-gradient(135deg, #D2051E 0%, #8B0012 100%);
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    padding: 9px 22px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(210,5,30,0.4);
+    transition: all 0.18s;
+    font-family: inherit;
+    min-width: 100px;
+  }
+  #tour-next-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(210,5,30,0.55);
+  }
+  #tour-step-count {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    min-width: 48px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Help Button -->
+<button id="hilti-help-btn" onclick="startTour()" title="Open Guided Tour">?</button>
+
+<!-- Backdrop -->
+<div id="tour-backdrop" onclick="closeTour()"></div>
+
+<!-- Tour Card -->
+<div id="tour-card">
+  <div id="tour-header">
+    <div id="tour-header-left">
+      <div id="tour-step-icon">🗺️</div>
+      <div>
+        <div id="tour-title">Platform Tour</div>
+        <div id="tour-subtitle">Hilti Project Prioritization</div>
+      </div>
+    </div>
+    <button id="tour-close-x" onclick="closeTour()">✕</button>
+  </div>
+  <div id="tour-progress-wrap">
+    <div id="tour-progress-bar" style="width:0%"></div>
+  </div>
+  <div id="tour-body">
+    <div id="tour-step-badge">Step 1</div>
+    <div id="tour-desc"></div>
+    <div id="tour-tip"></div>
+  </div>
+  <div id="tour-dots"></div>
+  <div id="tour-footer">
+    <button id="tour-skip-btn" onclick="closeTour()">Skip Tour</button>
+    <div id="tour-nav">
+      <span id="tour-step-count">1 / 12</span>
+      <button id="tour-prev-btn" onclick="prevStep()">← Prev</button>
+      <button id="tour-next-btn" onclick="nextStep()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STEPS = [
+  {
+    icon: "👋",
+    title: "Welcome to the Platform",
+    badge: "Introduction",
+    desc: `<b>Welcome to the Hilti Project Prioritization Tool!</b><br><br>
+This platform helps you evaluate, rank, and schedule your innovation portfolio based on financial return, break-even speed, and strategic alignment.<br><br>
+This short tour will walk you through every section so you can get the most out of the tool.`,
+    tip: "💡 You can press <b>Next</b> to advance, <b>Prev</b> to go back, or click any dot below to jump to a section."
+  },
+  {
+    icon: "🧭",
+    title: "Sidebar Navigation",
+    badge: "Navigation",
+    desc: `The <b>sidebar on the left</b> is your main navigation hub. It contains:<br><br>
+<b>• Logo Panel</b> — Co-branding area with Hilti and Liechtenstein logos.<br>
+<b>• Navigation Radio Buttons</b> — Click any page name to instantly switch views. The active page is highlighted with a red accent bar.<br><br>
+All 9 platform pages are reachable from here without any page reload.`,
+    tip: "💡 The navigation is persistent — your weights and settings stay intact when switching pages."
+  },
+  {
+    icon: "⚙️",
+    title: "Controls & Parameters",
+    badge: "Sidebar Expander",
+    desc: `Below navigation you'll find the <b>⚙️ Controls & Parameters</b> collapsible panel. Inside it:<br><br>
+<b>• Scoring Weights</b> — Adjust how much total net profit vs. break-even speed influences the composite rank.<br>
+<b>• Prioritization Algorithm</b> — Choose between Composite, WSJF, or ROI scoring methods.<br>
+<b>• Cost Buffer</b> — Apply a contingency % on top of every project's cost.<br>
+<b>• Execution Constraints</b> — Set total budget, monthly spend caps, and concurrency limits.<br>
+<b>• Portfolio Generator</b> — Regenerate sample data with a custom seed and project count.`,
+    tip: "💡 All controls update every chart and table <b>live</b> on the same run — no page reload needed."
+  },
+  {
+    icon: "📊",
+    title: "Portfolio Overview",
+    badge: "Page 1",
+    desc: `The <b>Portfolio Overview</b> page is your command centre. It shows:<br><br>
+<b>• Top KPI Bar</b> — Selected projects count, total business value, total cost, and cumulative net profit.<br>
+<b>• Bubble Chart</b> — Scatter of cost vs. business value; bubble size = project duration.<br>
+<b>• Ranked Table</b> — All projects sorted by composite score with filter controls for archetype, duration, and net profit range.<br>
+<b>• CSV Export</b> — Download the filtered portfolio as a CSV file.`,
+    tip: "💡 Toggle <b>Show selected projects only</b> to isolate projects approved by the budget scheduler."
+  },
+  {
+    icon: "🔍",
+    title: "Project Details",
+    badge: "Page 2",
+    desc: `The <b>Project Details</b> page lets you deep-dive into individual projects:<br><br>
+<b>• Multi-select picker</b> — Choose one or more projects by rank and name.<br>
+<b>• Time-series chart</b> — Plot cumulative net profit, monthly business value, cost, effort, or FTE count over the project lifetime.<br>
+<b>• Summary table</b> — Side-by-side comparison of the selected projects' KPIs.<br>
+<b>• Composition charts</b> — Donut and bar charts showing archetype distribution and budget breakdown across the selected portfolio.`,
+    tip: "💡 Select up to all projects to see the full portfolio time-series on a single chart."
+  },
+  {
+    icon: "🎲",
+    title: "Risk Simulation",
+    badge: "Page 3",
+    desc: `The <b>Risk Simulation</b> page runs Monte Carlo–style scenarios to assess portfolio resilience:<br><br>
+<b>• Profit P&L simulation</b> — Simulates hundreds of portfolio outcomes under cost and value uncertainty, showing a distribution of net profits.<br>
+<b>• Tornado chart</b> — Sensitivity analysis revealing which projects have the biggest impact on total profit when their inputs vary.<br>
+<b>• Scenario controls</b> — Adjust the number of simulations and uncertainty ranges directly on the page.`,
+    tip: "💡 Use the tornado chart to identify your <b>highest-leverage</b> projects — the ones worth extra scrutiny."
+  },
+  {
+    icon: "🔬",
+    title: "Robustness Analysis",
+    badge: "Page 4",
+    desc: `The <b>Robustness</b> page tests how stable your priority rankings are:<br><br>
+<b>• Rank stability simulation</b> — Perturbs project inputs thousands of times and measures how often each project stays in the top N.<br>
+<b>• Stability score table</b> — Shows each project's average rank and standard deviation under noise.<br>
+<b>• Insight guidance</b> — Projects with high rank variance are flagged as sensitive to assumption changes.`,
+    tip: "💡 A project that stays in the top 10 across 90%+ of simulations is a <b>safe bet</b> to prioritize."
+  },
+  {
+    icon: "🗓️",
+    title: "Execution Strategy",
+    badge: "Page 5",
+    desc: `The <b>Execution Strategy</b> page shows how your approved portfolio plays out over time:<br><br>
+<b>• Global timeline chart</b> — Cumulative net profit curve across the entire portfolio lifecycle.<br>
+<b>• Gantt-style schedule</b> — Visual lane chart of project start/end dates under sequential or parallel execution.<br>
+<b>• Budget & concurrency enforcement</b> — The scheduler automatically enforces the limits you set in the sidebar controls.`,
+    tip: "💡 Switch between <b>Sequential</b> and <b>Parallel</b> execution modes in the sidebar to see how scheduling changes the timeline."
+  },
+  {
+    icon: "🤝",
+    title: "Department Alignment",
+    badge: "Page 6",
+    desc: `The <b>Department Alignment</b> page enables cross-functional review and scoring:<br><br>
+<b>• Department scores</b> — Finance, IT/R&D, Sales/Marketing, and Operations each rate projects 1–10.<br>
+<b>• Comment threads</b> — Each department can leave timestamped notes for collaborative decision-making.<br>
+<b>• Alignment heatmap</b> — Visual overview showing which projects have strong or weak cross-departmental buy-in.<br>
+<b>• Score aggregation</b> — Average departmental alignment score is computed and displayed per project.`,
+    tip: "💡 Projects with high financial scores but low departmental alignment may face <b>execution risk</b>."
+  },
+  {
+    icon: "➕",
+    title: "Add Project",
+    badge: "Page 7",
+    desc: `The <b>Add Project</b> page lets you submit new projects for evaluation in two modes:<br><br>
+<b>• High-Level Mode</b> — Enter totals and choose a value-curve shape (S-Curve, Linear Ramp, etc.). The system spreads values across months automatically.<br>
+<b>• Detailed Mode</b> — Enter precise monthly business value, direct cost, and FTE count in an editable table.<br>
+<b>• Live Preview</b> — See the cumulative net profit curve update as you fill in data.<br>
+<br>New projects are immediately ranked against the existing portfolio upon submission.`,
+    tip: "💡 The <b>Archetype</b> selector in High-Level mode pre-fills sensible defaults based on historical project patterns."
+  },
+  {
+    icon: "🤖",
+    title: "Copilot Assistant",
+    badge: "Page 8",
+    desc: `The <b>Copilot</b> page is your AI-powered portfolio assistant:<br><br>
+<b>• Natural language queries</b> — Ask questions like <em>"Compare P-0001 and P-0002"</em> or <em>"What if the budget is 25M CHF?"</em><br>
+<b>• Budget simulation</b> — The copilot re-runs the scheduler with your stated limit and reports impacts.<br>
+<b>• Top project summaries</b> — Ask for the best-ranked projects and get an instant formatted report.<br>
+<b>• Archetype analysis</b> — Query cost distributions by project category.`,
+    tip: "💡 Try typing <em>"What is the total profit?"</em> or <em>"Limit budget to 10M"</em> to see the copilot in action."
+  },
+  {
+    icon: "📖",
+    title: "User Guide",
+    badge: "Page 9",
+    desc: `The <b>User Guide</b> page contains full platform documentation:<br><br>
+<b>• Scoring methodology</b> — Explains the composite score formula, WSJF, and ROI methods in detail.<br>
+<b>• KPI definitions</b> — Glossary of all metrics (Net Profit, Business Value, FTE, Break-Even, etc.).<br>
+<b>• How-to guides</b> — Step-by-step instructions for common tasks like adding projects and adjusting weights.<br>
+<b>• FAQ section</b> — Answers to the most common questions about the platform.`,
+    tip: "💡 Bookmark the User Guide page for quick reference during stakeholder presentations."
+  },
+  {
+    icon: "🚀",
+    title: "You're All Set!",
+    badge: "Complete",
+    desc: `You've completed the platform tour! Here's a quick summary of what you can do:<br><br>
+<b>1.</b> Explore your portfolio on <b>Portfolio Overview</b><br>
+<b>2.</b> Deep-dive into projects on <b>Project Details</b><br>
+<b>3.</b> Stress-test assumptions in <b>Risk Simulation</b> and <b>Robustness</b><br>
+<b>4.</b> Visualize execution on <b>Execution Strategy</b><br>
+<b>5.</b> Collaborate cross-functionally in <b>Department Alignment</b><br>
+<b>6.</b> Submit new ideas via <b>Add Project</b><br>
+<b>7.</b> Query insights through the <b>Copilot</b><br><br>
+<b>Click the ❓ button anytime to restart this tour.</b>`,
+    tip: null
+  }
+];
+
+let currentStep = 0;
+
+function renderDots() {
+  const wrap = document.getElementById('tour-dots');
+  wrap.innerHTML = '';
+  STEPS.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'tour-dot' + (i === currentStep ? ' active' : (i < currentStep ? ' done' : ''));
+    dot.onclick = () => goToStep(i);
+    wrap.appendChild(dot);
+  });
+}
+
+function goToStep(n) {
+  currentStep = n;
+  updateCard();
+}
+
+function updateCard() {
+  const step = STEPS[currentStep];
+  const total = STEPS.length;
+
+  document.getElementById('tour-step-icon').textContent = step.icon;
+  document.getElementById('tour-title').textContent = step.title;
+  document.getElementById('tour-step-badge').textContent = 'Step ' + (currentStep + 1) + ' — ' + step.badge;
+  document.getElementById('tour-desc').innerHTML = step.desc;
+
+  const tipEl = document.getElementById('tour-tip');
+  if (step.tip) {
+    tipEl.innerHTML = step.tip;
+    tipEl.style.display = 'block';
+  } else {
+    tipEl.style.display = 'none';
+  }
+
+  const pct = ((currentStep) / (total - 1)) * 100;
+  document.getElementById('tour-progress-bar').style.width = pct + '%';
+
+  document.getElementById('tour-step-count').textContent = (currentStep + 1) + ' / ' + total;
+
+  const prevBtn = document.getElementById('tour-prev-btn');
+  const nextBtn = document.getElementById('tour-next-btn');
+  prevBtn.disabled = currentStep === 0;
+  nextBtn.textContent = currentStep === total - 1 ? 'Finish ✓' : 'Next →';
+
+  renderDots();
+
+  // Animate card re-entry
+  const card = document.getElementById('tour-card');
+  card.classList.remove('visible');
+  setTimeout(() => card.classList.add('visible'), 30);
+}
+
+function nextStep() {
+  if (currentStep < STEPS.length - 1) {
+    currentStep++;
+    updateCard();
+  } else {
+    closeTour();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    updateCard();
+  }
+}
+
+function startTour() {
+  currentStep = 0;
+  document.getElementById('tour-backdrop').style.display = 'block';
+  const card = document.getElementById('tour-card');
+  card.style.display = 'block';
+  setTimeout(() => {
+    card.classList.add('visible');
+    updateCard();
+  }, 20);
+}
+
+function closeTour() {
+  const card = document.getElementById('tour-card');
+  const backdrop = document.getElementById('tour-backdrop');
+  card.classList.remove('visible');
+  setTimeout(() => {
+    backdrop.style.display = 'none';
+    card.style.display = 'none';
+  }, 280);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  const card = document.getElementById('tour-card');
+  if (card.style.display === 'none' || !card.style.display) return;
+  if (e.key === 'ArrowRight' || e.key === 'Enter') nextStep();
+  if (e.key === 'ArrowLeft') prevStep();
+  if (e.key === 'Escape') closeTour();
+});
+
+// ── Hoist elements into the parent Streamlit document ─────────────────
+(function hoistToParent() {
+  try {
+    const parentDoc = window.parent.document;
+    if (!parentDoc) return;
+
+    // Remove any previously hoisted tour elements (idempotent on reruns)
+    ['hilti-help-btn','tour-backdrop','tour-card','__tour-styles__'].forEach(id => {
+      const old = parentDoc.getElementById(id);
+      if (old) old.remove();
+    });
+
+    // Clone styles
+    const style = document.createElement('style');
+    style.id = '__tour-styles__';
+    style.textContent = Array.from(document.styleSheets)
+      .map(s => { try { return Array.from(s.cssRules).map(r => r.cssText).join('\\n'); } catch(e){ return ''; } })
+      .join('\\n');
+    parentDoc.head.appendChild(style);
+
+    // Clone DOM nodes
+    ['hilti-help-btn','tour-backdrop','tour-card'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        const clone = el.cloneNode(true);
+        parentDoc.body.appendChild(clone);
+      }
+    });
+
+    // Re-bind all interactive functions in parent context
+    const script = parentDoc.createElement('script');
+    script.textContent = `
+      (function() {
+        const STEPS = ${JSON.stringify(STEPS)};
+        let currentStep = 0;
+
+        function renderDots() {
+          const wrap = document.getElementById('tour-dots');
+          if (!wrap) return;
+          wrap.innerHTML = '';
+          STEPS.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'tour-dot' + (i === currentStep ? ' active' : (i < currentStep ? ' done' : ''));
+            dot.onclick = () => goToStep(i);
+            wrap.appendChild(dot);
+          });
+        }
+
+        function goToStep(n) { currentStep = n; updateCard(); }
+
+        function updateCard() {
+          const step = STEPS[currentStep];
+          const total = STEPS.length;
+          const icon = document.getElementById('tour-step-icon');
+          const title = document.getElementById('tour-title');
+          const badge = document.getElementById('tour-step-badge');
+          const desc = document.getElementById('tour-desc');
+          const tipEl = document.getElementById('tour-tip');
+          const bar = document.getElementById('tour-progress-bar');
+          const count = document.getElementById('tour-step-count');
+          const prevBtn = document.getElementById('tour-prev-btn');
+          const nextBtn = document.getElementById('tour-next-btn');
+          if (!icon) return;
+          icon.textContent = step.icon;
+          title.textContent = step.title;
+          badge.textContent = 'Step ' + (currentStep+1) + ' — ' + step.badge;
+          desc.innerHTML = step.desc;
+          if (step.tip) { tipEl.innerHTML = step.tip; tipEl.style.display = 'block'; }
+          else { tipEl.style.display = 'none'; }
+          const pct = ((currentStep) / (total - 1)) * 100;
+          bar.style.width = pct + '%';
+          count.textContent = (currentStep+1) + ' / ' + total;
+          prevBtn.disabled = currentStep === 0;
+          nextBtn.textContent = currentStep === total - 1 ? 'Finish ✓' : 'Next →';
+          renderDots();
+          const card = document.getElementById('tour-card');
+          card.classList.remove('visible');
+          setTimeout(() => card.classList.add('visible'), 30);
+        }
+
+        window.__tourNext = function() {
+          if (currentStep < STEPS.length - 1) { currentStep++; updateCard(); }
+          else { window.__tourClose(); }
+        };
+        window.__tourPrev = function() {
+          if (currentStep > 0) { currentStep--; updateCard(); }
+        };
+        window.__tourClose = function() {
+          const card = document.getElementById('tour-card');
+          const bd = document.getElementById('tour-backdrop');
+          if (card) card.classList.remove('visible');
+          setTimeout(() => {
+            if (bd) bd.style.display = 'none';
+            if (card) card.style.display = 'none';
+          }, 280);
+        };
+        window.__tourStart = function() {
+          currentStep = 0;
+          const bd = document.getElementById('tour-backdrop');
+          const card = document.getElementById('tour-card');
+          if (bd) bd.style.display = 'block';
+          if (card) { card.style.display = 'block'; }
+          setTimeout(() => {
+            if (card) card.classList.add('visible');
+            updateCard();
+          }, 20);
+        };
+
+        // Wire button onclick
+        const helpBtn = document.getElementById('hilti-help-btn');
+        if (helpBtn) helpBtn.onclick = window.__tourStart;
+        const bd2 = document.getElementById('tour-backdrop');
+        if (bd2) bd2.onclick = window.__tourClose;
+        const cx = document.getElementById('tour-close-x');
+        if (cx) cx.onclick = window.__tourClose;
+        const skipBtn = document.getElementById('tour-skip-btn');
+        if (skipBtn) skipBtn.onclick = window.__tourClose;
+        const nextBtn2 = document.getElementById('tour-next-btn');
+        if (nextBtn2) nextBtn2.onclick = window.__tourNext;
+        const prevBtn2 = document.getElementById('tour-prev-btn');
+        if (prevBtn2) prevBtn2.onclick = window.__tourPrev;
+
+        // Keyboard
+        document.addEventListener('keydown', function(e) {
+          const card = document.getElementById('tour-card');
+          if (!card || card.style.display === 'none' || !card.style.display) return;
+          if (e.key === 'ArrowRight' || e.key === 'Enter') window.__tourNext();
+          if (e.key === 'ArrowLeft') window.__tourPrev();
+          if (e.key === 'Escape') window.__tourClose();
+        });
+      })();
+    `;
+    parentDoc.body.appendChild(script);
+  } catch(err) {
+    console.warn('Tour hoist error:', err);
+  }
+})();
+</script>
+</body>
+</html>
+''', height=0, width=0)

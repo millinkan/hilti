@@ -54,9 +54,9 @@ Where:
 - $\text{value\_norm}[i] = \frac{\text{Total\_NP}[i] - \min(\text{Total\_NP})}{\max(\text{Total\_NP}) - \min(\text{Total\_NP})}$
 - $\text{speed\_score}[i] = \max(0, 1 - \frac{\text{break\_even\_month}[i] - 1}{\text{duration}[i]})$
 
-### B. WSJF (Weighted Shortest Job First)
-Ranks projects to prioritize high-value, fast-turnaround jobs:
-$$\text{WSJF}[i] = \frac{\text{Business Value}[i]}{\text{Duration}[i]}$$
+### B. Hilti Value Creation Rating
+Hilti's official priority formula — net profit per unit of time (an alias `WSJF` is still accepted internally for backward compatibility):
+$$\text{Value Creation Rating}[i] = \frac{\text{Net Profit}[i]}{\text{Duration}[i]} = \frac{\text{Business Value}[i] - \text{Costs}[i]}{\text{Duration}[i]}$$
 
 ### C. ROI (Return on Investment)
 Ranks projects based on cost-efficiency:

@@ -75,7 +75,10 @@ def score_projects(projects: list[Project],
         for p in projects
     ])
 
-    if method == "WSJF":
+    if method in ("Hilti Value Creation Rating", "WSJF"):
+        # Hilti's official Value Creation Rating: Net Profit / Duration
+        # ( = (Business Value - Costs) / Duration ). "WSJF" kept as an alias
+        # for backward compatibility with older saved selections.
         composites = np.array([p.total_net_profit / max(1.0, p.duration_months) for p in projects])
     elif method == "ROI":
         composites = np.array([p.total_net_profit / max(1.0, p.total_cost) for p in projects])
@@ -305,7 +308,7 @@ def simulate_rank_stability(projects: list[Project],
         w_total = weight_value + weight_speed
         wv = weight_value / w_total if w_total > 0 else 0.5
         ws = weight_speed / w_total if w_total > 0 else 0.5
-        if method == "WSJF":
+        if method in ("Hilti Value Creation Rating", "WSJF"):
             return total_np / np.maximum(1.0, durations)[:, None]
         if method == "ROI":
             return total_np / np.maximum(1.0, total_cost)
