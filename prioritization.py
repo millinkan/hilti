@@ -243,6 +243,7 @@ def build_global_timeline(scheduled: list[ScheduledProject]) -> pd.DataFrame:
         "Cumulative Net Profit": cum_net_profit,
         "FTE Count": global_fte
     })
+# feature/live2
 
 
 def simulate_reinvestment(projects_in_order: list[Project],
@@ -433,3 +434,5 @@ def simulate_rank_stability(projects: list[Project],
         "topN_retention": float(retention.mean()),
         "top_n": top_n,
     }
+
+ main

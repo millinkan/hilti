@@ -14,7 +14,7 @@ Storing only the four inputs keeps the data file the single source of truth.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, field
 from typing import Optional
 
 import numpy as np
@@ -118,28 +118,6 @@ class Project:
     def gain_phase_months(self) -> int:
         """Months from break-even to the end of the project (0 if never breaks even)."""
         return self.duration_months - self.cost_phase_months
-
-
-# --------------------------------------------------------------------------
-# Cost buffer (estimation contingency)
-# --------------------------------------------------------------------------
-
-def apply_cost_buffer(projects: list[Project], buffer: float) -> list[Project]:
-    """Return copies of the projects with all costs inflated by `buffer` (e.g. 0.10 = +10%).
-
-    Models an estimation/contingency reserve on top of the planned cost.
-    Scaling both direct_cost and fte_cost_monthly by (1 + buffer) inflates the
-    whole monthly cost curve uniformly, so net profit, break-even and totals all
-    reflect the buffer automatically. Business value and FTE counts are untouched.
-    The buffer is a view-time multiplier and is never persisted to the CSVs.
-    """
-    if not buffer:
-        return projects
-    factor = 1.0 + float(buffer)
-    return [
-        replace(p, direct_cost=p.direct_cost * factor, fte_cost_monthly=p.fte_cost_monthly * factor)
-        for p in projects
-    ]
 
 
 # --------------------------------------------------------------------------
