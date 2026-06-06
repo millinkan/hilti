@@ -44,7 +44,7 @@ A **Sidebar** on the left contains weights and optimization controls.
 - **Weight: Break-Even Speed**: Tiebreaker speed score weight.
 - **Prioritization Algorithm**: Select between:
   - **Composite**: Weighted combination of normalized Net Profit and Speed Score.
-  - **WSJF (Weighted Shortest Job First)**: Ranks by `Business Value / Duration`.
+  - **Hilti Value Creation Rating**: Hilti's official formula. Ranks by `Net Profit / Duration`.
   - **ROI (Return on Investment)**: Ranks by `Net Profit / Cost`.
 
 ### 🎛️ Prototype Phase 2 & 3 Optimization Constraints

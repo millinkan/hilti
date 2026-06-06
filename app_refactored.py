@@ -1218,7 +1218,7 @@ def _render_highlevel_add(projects: list[Project]) -> None:
 # --------------------------------------------------------------------------
 
 with tab_copilot:
-    st.subheader("💬 Hilti Portfolio Copilot (Phase 3)")
+    st.subheader("💬 Hilti Portfolio Copilot")
     st.caption("Interact with your real-time portfolio data, test what-if scenarios, and compare projects using natural language.")
     
     # Initialize message history
@@ -1536,22 +1536,40 @@ with tab_add:
 # --------------------------------------------------------------------------
 
 with tab_guide:
-    st.title("📖 User Guide & Executive Documentation")
+    st.title("User Guide & Executive Documentation")
     st.markdown("""
     Welcome to the **Hilti Project Prioritization & Optimization Platform**. This cockpit provides strategic portfolio governance, interactive side-by-side simulations, cross-departmental alignment, and on-demand AI consulting.
     """)
     
-    with st.expander("🧮 Prioritization Methodology & Formulas", expanded=True):
+    with st.expander("Platform Navigation & Feature Guide", expanded=True):
+        st.markdown("""
+        The platform features nine tabs at the top of the interface:
+        
+        * **Dashboard**: High-level visual indicators of the selected portfolio, including donut charts for portfolio mix by Archetype and distribution of Break-Even months.
+        * **Ranking**: The core prioritized project table. You can filter by Archetype, Duration, and Net Profit, download the filtered portfolio as a CSV, and toggle showing selected projects only.
+        * **Project Details**: Deep dive into individual project metrics over time (FTE count, direct costs, effort costs, cumulative net profit) and generate download-ready stakeholder reports.
+        * **Risk**: Runs Monte Carlo simulations on individual projects to stress-test financial outcomes under business value and cost uncertainty.
+        * **Scenario Simulation**: Compares execution scenarios (Sequential vs. Parallel execution) side-by-side under budget, monthly spend, and concurrency limits, and ranks projects under Composite, WSJF, and ROI methods.
+        * **AI Portfolio Copilot**: Chat interface to converse with the AI Assistant regarding project performance, ranking rules, and custom scenarios.
+        * **Interdepartmental Hub**: Collects buy-in ratings (1-10) across Finance, IT/R&D, Sales/Marketing, and Operations, visualizes alignment on a radar chart, and manages a shared discussion log.
+        * **Add Project**: Entry form to add projects using a Detailed monthly data editor or High-level estimates with customizable value shape curves.
+        * **User Guide**: Methodology, Formulas, Optimization Constraints, and Page Guide.
+        """)
+
+    with st.expander("Prioritization Methodology & Formulas", expanded=False):
         st.markdown(r"""
+        The platform supports three distinct prioritization algorithms:
+        
         #### 1. Composite Score (Hilti Default)
         The Composite Score blends financial yield and time-to-value speed:
         $$\text{Composite Score} = w_{\text{profit}} \cdot \text{Normalized Net Profit} + w_{\text{speed}} \cdot \text{Speed Factor}$$
         Where:
         - $\text{Normalized Net Profit}$ is the min-max normalized total net profit across the portfolio.
-        - $\text{Speed Factor}$ is calculated from the Break-Even speed: $1 - \frac{\text{Break-Even Month}}{\text{Duration}}$.
+        - $\text{Speed Factor}$ is calculated from the Break-Even speed: $\max\left(0, 1 - \frac{\text{Break-Even Month} - 1}{\text{Duration}}\right)$; projects that never break even score $0$.
+        - $w_{\text{profit}} $ and $w_{\text{speed}}$ are adjustable weights configured in the sidebar configuration drawer.
         
         #### 2. Weighted Shortest Job First (WSJF)
-        WSJF prioritizes high-value, fast-turnaround projects to optimize cost of delay:
+        WSJF prioritizes high-value, fast-turnaround projects to minimize the Cost of Delay:
         $$\text{WSJF} = \frac{\text{Business Value}}{\text{Duration}}$$
         
         #### 3. Return on Investment (ROI)
@@ -1559,9 +1577,9 @@ with tab_guide:
         $$\text{ROI} = \frac{\text{Total Net Profit}}{\text{Total Cost}}$$
         """)
         
-    with st.expander("⏳ Multi-Constraint Portfolio Optimization & Parallel Scheduling"):
+    with st.expander("Multi-Constraint Portfolio Optimization & Parallel Scheduling", expanded=False):
         st.markdown(r"""
-        Under the **🕹️ Scenario Simulation** tab, the platform schedules projects dynamically:
+        Under the **Scenario Simulation** tab, the platform schedules projects dynamically based on resource and cash flow constraints:
         
         - **Total Available Budget Constraint**:
           $$\sum_{i \in \text{Selected}} \text{Total Cost}_i \le \text{Total Budget}$$
@@ -1570,5 +1588,47 @@ with tab_guide:
         - **Concurrency Constraint**:
           $$|\text{Active}(t)| \le \text{Max Concurrency Limit}$$
           
-        *Note: In Parallel mode, the algorithm operates greedily down the priority list, dynamically sliding projects to start as early as possible without violating any overlapping monthly spend or concurrency constraints.*
+        *Note: In Parallel mode, the scheduling algorithm operates greedily down the priority list, dynamically sliding projects to start as early as possible (from Month 1 onwards) without violating the overlapping monthly spend or concurrency constraints.*
+        """)
+
+    with st.expander("Risk & Robustness Analysis Methodology", expanded=False):
+        st.markdown(r"""
+        To deal with estimation uncertainty, the platform provides advanced simulation features:
+        
+        #### 1. Monte Carlo Risk Simulation
+        We apply random perturbations to monthly business value and monthly costs:
+        - $\text{Value}_t \sim \text{Normal}(\mu_v, \sigma_v)$
+        - $\text{Cost}_t \sim \text{Normal}(\mu_c, \sigma_c)$
+        
+        Key Outputs:
+        - **P10 (Worst Case)**: 10% probability that the net profit will fall below this value.
+        - **P50 (Expected)**: Median outcome of the simulation.
+        - **P90 (Best Case)**: 90% probability that the net profit will be below this value (or 10% chance to exceed it).
+        - **Probability of Loss**: The percentage of iterations where cumulative net profit is less than 0.
+        
+        #### 2. Sensitivity Analysis (Tornado Chart)
+        Measures the impact of a $\pm X\%$ shift in each driver (Value, Direct Cost, FTE Cost, Concurrency limit, etc.) on the total portfolio net profit. Drivers are ordered by the magnitude of their swing.
+        
+        #### 3. Rank Stability
+        Runs multiple prioritization passes under random variance and calculates:
+        - **Spearman Rank Correlation**: Average correlation coefficient between the baseline priority list and the perturbed lists (value close to 1.0 indicates stable priority order).
+        - **Top-N Retention**: The average percentage of baseline Top-N projects that remain in the Top-N after random noise is applied.
+        """)
+
+    with st.expander("Interdepartmental Alignment Score (OAS)", expanded=False):
+        st.markdown(r"""
+        Successful implementation requires buy-in from multiple departments. The **Interdepartmental Hub** tab aggregates buy-in scores (1-10 scale) from four core business units:
+        
+        - **Finance**: Evaluates NPV, ROI, and budget alignment.
+        - **IT/R&D**: Evaluates technical feasibility and resource capacity.
+        - **Sales/Marketing**: Evaluates commercial readiness and customer value.
+        - **Operations**: Evaluates delivery complexity and supply chain impact.
+        
+        The **Org Alignment Score (OAS)** is the average of these ratings:
+        $$\text{OAS} = \frac{\text{Finance} + \text{IT/R\&D} + \text{Sales/Marketing} + \text{Operations}}{4}$$
+        
+        OAS thresholds:
+        - **OAS $\ge 8.0$**: Strong Alignment
+        - **$6.0 \le$ OAS $< 8.0$**: Moderate Alignment
+        - **OAS $< 6.0$**: Needs Review
         """)
