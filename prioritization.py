@@ -53,9 +53,11 @@ def _min_max(values: np.ndarray) -> np.ndarray:
 
 
 def score_projects(projects: list[Project],
-                   weight_value: float = 0.75,
-                   weight_speed: float = 0.25,
-                   method: str = "Composite") -> list[ScoredProject]:
+                   weight_value: float = 0.5,
+                   weight_speed: float = 0.5,
+                   method: str = "Composite",
+                   discount_rate: float = 0.10,
+                   reinvest_rate: float = 0.30) -> list[ScoredProject]:
     """Compute the composite score for every project and return them ranked."""
     if not projects:
         return []
@@ -69,13 +71,20 @@ def score_projects(projects: list[Project],
     totals = np.array([p.total_net_profit for p in projects])
     value_norm = _min_max(totals)
 
-    speeds = np.array([
-        max(0.0, 1.0 - (p.break_even_month - 1) / p.duration_months)
-        if p.break_even_month is not None else 0.0
+    # Break-even speed via the time value of money: a project that turns profitable
+    # in month 6 is discounted far less than one that does so in month 20, so EARLY
+    # break-even scores higher in absolute time. (Previously this divided by each
+    # project's OWN duration, which made long, slow programmes look deceptively
+    # "fast" and is why Composite under-valued quick payback.) Normalised to [0, 1].
+    r_m = (1.0 + discount_rate) ** (1.0 / 12.0) - 1.0
+    disc_factor = np.array([
+        1.0 / (1.0 + r_m) ** (p.break_even_month if p.break_even_month is not None
+                              else p.duration_months + 1)
         for p in projects
     ])
+    speeds = _min_max(disc_factor)
 
-    if method in ("Hilti Value Creation Rating", "WSJF"):
+    if method in ("Value Creation Rating", "Hilti Value Creation Rating", "WSJF"):
         # Hilti's official Value Creation Rating: Net Profit / Duration
         # ( = (Business Value - Costs) / Duration ). "WSJF" kept as an alias
         # for backward compatibility with older saved selections.
@@ -83,7 +92,17 @@ def score_projects(projects: list[Project],
     elif method == "ROI":
         composites = np.array([p.total_net_profit / max(1.0, p.total_cost) for p in projects])
     else:
-        composites = w_value * value_norm + w_speed * speeds
+        # Composite = "Capital Velocity": discounted net profit per CHF invested, at the
+        # REINVESTMENT rate. It uses each project's real monthly profit profile (unlike
+        # Value Creation Rating's uniform "/ duration") AND discounts by absolute time
+        # (unlike ROI, which ignores timing). A higher reinvest_rate weights quick payback
+        # more heavily — money back sooner can be reinvested into the next projects sooner.
+        r_re = (1.0 + reinvest_rate) ** (1.0 / 12.0) - 1.0
+        composites = np.array([
+            float((p.monthly_net_profit / (1.0 + r_re) ** np.arange(1, p.duration_months + 1)).sum())
+            / max(1.0, p.total_cost)
+            for p in projects
+        ])
 
     # Rank: highest composite first; stable tie-breaker on total NP
     order = np.lexsort((-totals, -composites))
@@ -226,6 +245,48 @@ def build_global_timeline(scheduled: list[ScheduledProject]) -> pd.DataFrame:
     })
 
 
+def simulate_reinvestment(projects_in_order: list[Project],
+                          start_capital: float,
+                          horizon: int) -> dict:
+    """Capital-recycling simulation: returns are reinvested into the next projects.
+
+    Walks month by month. Each month, capital is committed to the next projects in
+    priority order (a project starts once free capital covers its total cost); the
+    started projects then return their business value over their gain phase, which
+    replenishes the capital pool and lets it fund further projects sooner. This is
+    the "make money fast, reinvest, repeat" objective: a priority order that frees
+    capital quickly compounds into more capital within the horizon.
+
+    Returns the monthly capital trajectory, the number of projects funded, and the
+    final capital.
+    """
+    capital = float(start_capital)
+    horizon = max(1, int(horizon))
+    trajectory = np.empty(horizon)
+    active: list[tuple[Project, int]] = []
+    bi = 0
+    n = len(projects_in_order)
+    for t in range(1, horizon + 1):
+        # commit capital to the next projects while it is available
+        while bi < n and capital >= projects_in_order[bi].total_cost:
+            capital -= projects_in_order[bi].total_cost
+            active.append((projects_in_order[bi], t))
+            bi += 1
+        # receive this month's business value from active projects
+        for p, start in active:
+            local = t - start
+            if 0 <= local < p.duration_months:
+                capital += float(p.business_value[local])
+        trajectory[t - 1] = capital
+    return {
+        "months": np.arange(1, horizon + 1),
+        "capital": trajectory,
+        "funded": bi,
+        "final_capital": float(trajectory[-1]),
+        "start_capital": float(start_capital),
+    }
+
+
 # --------------------------------------------------------------------------
 # Risk & robustness analysis
 # --------------------------------------------------------------------------
@@ -287,10 +348,12 @@ def simulate_rank_stability(projects: list[Project],
                             n_iter: int = 500,
                             bv_std: float = 0.20,
                             cost_std: float = 0.10,
-                            weight_value: float = 0.75,
-                            weight_speed: float = 0.25,
+                            weight_value: float = 0.5,
+                            weight_speed: float = 0.5,
                             method: str = "Composite",
                             top_n: int = 10,
+                            discount_rate: float = 0.10,
+                            reinvest_rate: float = 0.30,
                             seed: int | None = None) -> dict:
     """Measure how stable the ranking is when the inputs are perturbed.
 
@@ -302,24 +365,16 @@ def simulate_rank_stability(projects: list[Project],
     """
     n = len(projects)
     durations = np.array([p.duration_months for p in projects], dtype=float)
+    r_re = (1.0 + reinvest_rate) ** (1.0 / 12.0) - 1.0
 
-    def _scores_from(total_np, total_cost, breakeven):
+    def _scores_from(total_np, total_cost, total_npv):
         """Vectorised scoring over (n_projects, n_cols) matrices."""
-        w_total = weight_value + weight_speed
-        wv = weight_value / w_total if w_total > 0 else 0.5
-        ws = weight_speed / w_total if w_total > 0 else 0.5
-        if method in ("Hilti Value Creation Rating", "WSJF"):
+        if method in ("Value Creation Rating", "Hilti Value Creation Rating", "WSJF"):
             return total_np / np.maximum(1.0, durations)[:, None]
         if method == "ROI":
             return total_np / np.maximum(1.0, total_cost)
-        lo = total_np.min(axis=0)
-        hi = total_np.max(axis=0)
-        span = hi - lo
-        value_norm = np.where(span < 1e-9, 0.5, (total_np - lo) / np.where(span < 1e-9, 1.0, span))
-        speed = np.where(breakeven > 0,
-                         np.maximum(0.0, 1.0 - (breakeven - 1) / durations[:, None]),
-                         0.0)
-        return wv * value_norm + ws * speed
+        # Composite = Capital Velocity: discounted net profit per CHF invested.
+        return total_npv / np.maximum(1.0, total_cost)
 
     def _ranks(scores):
         """Rank 1 = highest score, per column. Vectorised double-argsort."""
@@ -332,14 +387,16 @@ def simulate_rank_stability(projects: list[Project],
     # --- base (noise-free) ranking --------------------------------------
     base_np = np.array([[p.total_net_profit] for p in projects], dtype=float)
     base_cost = np.array([[p.total_cost] for p in projects], dtype=float)
-    base_be = np.array([[p.break_even_month if p.break_even_month else 0] for p in projects], dtype=float)
-    base_ranks = _ranks(_scores_from(base_np, base_cost, base_be))[:, 0]
+    base_npv = np.array([[float((p.monthly_net_profit /
+                                 (1.0 + r_re) ** np.arange(1, p.duration_months + 1)).sum())]
+                         for p in projects], dtype=float)
+    base_ranks = _ranks(_scores_from(base_np, base_cost, base_npv))[:, 0]
 
     # --- perturbed simulations ------------------------------------------
     rng = np.random.default_rng(seed)
     total_np = np.zeros((n, n_iter))
     total_cost = np.zeros((n, n_iter))
-    breakeven = np.zeros((n, n_iter))
+    total_npv = np.zeros((n, n_iter))
     for i, p in enumerate(projects):
         dur = p.duration_months
         noise_bv = rng.normal(1.0, bv_std, (n_iter, dur))
@@ -348,13 +405,9 @@ def simulate_rank_stability(projects: list[Project],
         monthly_np = p.business_value * noise_bv - sim_cost
         total_np[i] = monthly_np.sum(axis=1)
         total_cost[i] = sim_cost.sum(axis=1)
-        cum = np.cumsum(monthly_np, axis=1)
-        positive = cum >= 0
-        has_be = positive.any(axis=1)
-        first = np.argmax(positive, axis=1) + 1
-        breakeven[i] = np.where(has_be, first, 0)
+        total_npv[i] = (monthly_np / (1.0 + r_re) ** np.arange(1, dur + 1)).sum(axis=1)
 
-    ranks = _ranks(_scores_from(total_np, total_cost, breakeven))
+    ranks = _ranks(_scores_from(total_np, total_cost, total_npv))
 
     # --- robustness summary measures ------------------------------------
     br = base_ranks - base_ranks.mean()
