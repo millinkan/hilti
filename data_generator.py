@@ -301,9 +301,22 @@ NAME_POOL = {
 
 def _synthesize_project(project_id: str,
                         archetype: Archetype,
-                        rng: np.random.Generator) -> Project:
-    """Build the monthly arrays for one project given an archetype draw."""
+                        rng: np.random.Generator,
+                        duration_range: tuple[int, int] | None = None) -> Project:
+    """Build the monthly arrays for one project given an archetype draw.
+
+    `duration_range` (lo, hi) overrides the archetype's sampled duration with a
+    uniform draw from that range. The total business value is scaled by the
+    duration ratio so the per-month value intensity stays realistic — a Tool R&D
+    programme compressed from 28 to 4 months keeps its monthly earning rate
+    instead of cramming the full 28-month value into 4 months.
+    """
     p = archetype.sample(rng)
+    if duration_range is not None:
+        lo, hi = duration_range
+        new_n = int(rng.integers(lo, hi, endpoint=True))
+        p["total_value"] *= new_n / p["duration"]
+        p["duration"] = new_n
     n = p["duration"]
     cost_months = max(1, int(round(n * p["cost_share"])))
     cost_months = min(cost_months, n - 1) if n > 1 else cost_months
@@ -353,10 +366,16 @@ def _synthesize_project(project_id: str,
     )
 
 
-def generate_projects(n_projects: int = 100, seed: int = 42) -> list[Project]:
+def generate_projects(n_projects: int = 100, seed: int = 42,
+                      duration_range: tuple[int, int] | None = None) -> list[Project]:
     """Generate a portfolio of `n_projects` projects, sampled across all archetypes.
 
     Reproducible: same `seed` always produces the same portfolio.
+    `duration_range=(lo, hi)` forces every project's duration into that range
+    (e.g. (1, 4) for a short-project portfolio); business value scales with the
+    duration so monthly intensity stays realistic. With `duration_range=None`
+    no extra random draws happen, so existing seeds keep producing exactly the
+    same portfolios as before.
     """
     rng = np.random.default_rng(seed)
     weights = np.array([a.weight for a in ARCHETYPES])
@@ -365,7 +384,7 @@ def generate_projects(n_projects: int = 100, seed: int = 42) -> list[Project]:
     projects: list[Project] = []
     for i in range(1, n_projects + 1):
         archetype = ARCHETYPES[rng.choice(len(ARCHETYPES), p=weights)]
-        projects.append(_synthesize_project(f"P-{i:04d}", archetype, rng))
+        projects.append(_synthesize_project(f"P-{i:04d}", archetype, rng, duration_range))
     return projects
 
 
