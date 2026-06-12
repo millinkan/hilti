@@ -328,10 +328,24 @@ with st.sidebar:
         st.caption("Regenerate the sample portfolio from scratch (overwrites CSVs).")
         seed = st.number_input("Random seed", value=42, step=1)
         n_projects = st.number_input("Number of projects", value=100, min_value=10, max_value=500, step=10)
+        custom_duration = st.checkbox(
+            "Custom project duration",
+            value=False,
+            help="Force every generated project's duration into a chosen range — e.g. 1-4 months "
+                 "for a short-project portfolio. Business value scales with the duration so monthly "
+                 "earning rates stay realistic. Off = standard archetype durations; existing seeds "
+                 "keep producing exactly the same portfolios.",
+        )
+        gen_duration_range = None
+        if custom_duration:
+            gen_duration_range = st.slider("Project duration range (months)", 1, 48, (1, 4),
+                                           help="Each project's duration is drawn uniformly from this range.")
         if st.button("Regenerate sample data", type="secondary"):
-            save_projects(generate_projects(n_projects=int(n_projects), seed=int(seed)))
+            save_projects(generate_projects(n_projects=int(n_projects), seed=int(seed),
+                                            duration_range=gen_duration_range))
             st.cache_data.clear()
-            st.success(f"Generated {int(n_projects)} projects.")
+            dur_note = f" (durations {gen_duration_range[0]}-{gen_duration_range[1]} mo)" if gen_duration_range else ""
+            st.success(f"Generated {int(n_projects)} projects{dur_note}.")
             st.rerun()
 
 st.markdown("<div style='margin-bottom: 25px;'></div>", unsafe_allow_html=True)
@@ -897,7 +911,7 @@ elif current_page == 'Execution Strategy':
         "profit arrives; Value Creation Rating assumes profit is spread evenly — the latter two leave money on the table.)*"
     )
     start_cap = float(total_budget) if total_budget else 50_000_000.0
-    horizon = int(st.slider("Horizon (months)", 12, 60, 24, 6, key="reinvest_horizon"))
+    horizon = int(st.slider("Horizon (months)", 1, 60, 12, 1, key="reinvest_horizon"))
     st.caption(f"Starting capital = current **Total Budget** ({fmt_money(start_cap)}); change it in the sidebar.")
 
     method_colors = {"Capital Velocity": "#D2051E", "VCR": "#1f77b4", "ROI": "#ff8c00"}
@@ -1796,7 +1810,7 @@ All 9 platform pages are reachable from here without any page reload.`,
 <b>• Prioritization Algorithm</b> — Choose between Capital Velocity, Value Creation Rating, or ROI scoring methods.<br>
 <b>• Cost Buffer</b> — Apply a contingency % on top of every project's cost.<br>
 <b>• Execution Constraints</b> — Set total budget, monthly spend caps, and concurrency limits.<br>
-<b>• Portfolio Generator</b> — Regenerate sample data with a custom seed and project count.`,
+<b>• Portfolio Generator</b> — Regenerate sample data with a custom seed, project count, and optional duration range (e.g. 1-4 month short-project portfolios).`,
     tip: "💡 All controls update every chart and table <b>live</b> on the same run — no page reload needed."
   },
   {
