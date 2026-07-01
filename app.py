@@ -1204,96 +1204,119 @@ elif current_page == 'User Guide':
     # User Guide & documentation
     st.subheader("Executive Documentation")
     st.markdown("""
-    Welcome to the **Hilti Project Prioritization & Optimization Platform**. This cockpit provides strategic portfolio governance, interactive side-by-side simulations, cross-departmental alignment, and on-demand AI consulting.
+    Welcome to the **Hilti Project Prioritization & Optimization Platform**. This cockpit provides strategic portfolio governance, interactive side-by-side simulations, cross-departmental alignment, and on-demand AI consulting. The sections below document the logic, formulas and visualisations behind every page.
     """)
-    
+
     with st.expander("Platform Navigation & Feature Guide", expanded=True):
         st.markdown("""
-        The platform is divided into sections, accessible via the sidebar navigation:
-        
-        * **Portfolio Overview**: A high-level view of the portfolio. Shows the key "Ranking — Cumulative Net Profit over Time" chart (each project's net profit accumulating over its lifetime, with its priority rank), the four portfolio KPIs, and the prioritized projects table. You can filter by Archetype, Duration, and Net Profit, and download the filtered list as a CSV.
-        * **Project Details**: Deep dive into individual project metrics over time (FTE count, direct costs, effort costs, cumulative and discounted-cumulative net profit) and overall portfolio composition analysis.
-        * **Robustness Simulation**: Monte Carlo on the whole portfolio (or a single project) to stress-test net profit under value and cost uncertainty, plus rank-stability analysis (Spearman correlation and Top-N retention) showing how reliable the prioritized order stays.
-        * **Execution Strategy**: Compares prioritization methods (Capital Velocity vs. Value Creation Rating vs. ROI) and execution scenarios (Sequential vs. Parallel execution) side-by-side to optimize cumulative net profit.
-        * **Department Alignment**: Tracks cross-functional alignment and buy-in across Finance, IT/R&D, Sales/Marketing, and Operations using a radar chart and Org Alignment Score (OAS), and hosts a collaborative discussion workspace.
-        * **Add Project**: Allows adding custom projects using a Detailed monthly grid editor or a High-level estimates generator with customizable value shape curves.
-        * **Copilot**: An interactive AI Assistant capable of comparing projects, explaining prioritization drivers, and running instant what-if budget scenarios.
+        The platform is divided into pages (sidebar navigation), plus a **Controls & Parameters** panel — the "Parameter Center" — in the sidebar that drives every page:
+
+        * **Portfolio Overview**: high-level view of the portfolio — the key "Ranking — Cumulative Net Profit over Time" chart, the four portfolio KPIs, and the prioritized projects table (filterable by archetype, duration, net profit; CSV export).
+        * **Project Details**: deep dive into individual projects over time (cumulative and discounted-cumulative net profit, monthly business value/cost, FTE count) plus portfolio composition charts.
+        * **Robustness Simulation**: Monte Carlo on the whole portfolio (or a single project) to stress-test net profit, plus rank-stability analysis (Spearman correlation, Top-N retention).
+        * **Execution Strategy**: compares the prioritization methods and their capital-recycling behaviour, and the Sequential vs. Parallel execution scenarios.
+        * **Department Alignment**: a fact-based Org Alignment Score (OAS) and radar, a collaborative review/discussion workspace, and a stakeholder report export.
+        * **Add Project**: add custom projects via a detailed monthly editor or a high-level estimates generator with selectable value-curve shapes.
+        * **Copilot**: a 100% local, rule-based assistant that compares projects, explains ranking drivers, and runs instant what-if budget scenarios.
+        * **Controls & Parameters (sidebar)**: prioritization method, reinvestment rate, estimation cost buffer, budget & spend limits, execution plan, and the portfolio generator.
         """)
 
     with st.expander("Prioritization Methodology & Formulas", expanded=False):
         st.markdown(r"""
-        The platform supports three distinct prioritization algorithms:
-        
-        #### 1. Capital Velocity (Default)
-        Discounted net profit **per CHF invested** — a time-aware ROI that rewards fast payback, because money back sooner can be reinvested into the next projects sooner:
-        $$\text{Capital Velocity} = \frac{\sum_{t=1}^{D} \text{NetProfit}_t \,/\, (1+r)^{t}}{\text{Total Cost}}, \quad r = (1+\text{reinvest})^{1/12}-1$$
-        Where:
-        - $\text{NetProfit}_t$ is the project's net profit in month $t$ (the real monthly profile, not an average).
-        - $r$ comes from the **Reinvestment rate** slider. At $0\%$ Capital Velocity equals plain ROI; higher rates reward earlier profit more strongly.
+        All three methods follow the same pattern — **profit per unit of a scarce resource**. The denominator reveals which resource the method treats as the bottleneck, and thereby the optimization problem it solves. In every case **Net Profit (NP) = Business Value − Costs = Business Value − (Direct Cost + Effort)**.
 
-        #### 2. Value Creation Rating
-        Net profit generated per unit of time:
-        $$\text{Value Creation Rating} = \frac{\text{Net Profit}}{\text{Duration}} = \frac{\text{Business Value} - \text{Costs}}{\text{Duration}}$$
-        
-        #### 3. Return on Investment (ROI)
-        ROI ranks projects based on financial cost-efficiency:
+        #### 1. Capital Velocity (Default) — bottleneck: capital + time
+        Discounted net profit **per CHF invested** — a time-aware ROI that rewards fast payback, because money back sooner can be reinvested into the next projects sooner:
+        $$\text{Capital Velocity} = \frac{\sum_{t=1}^{D} \text{NP}_t \,/\, (1+r)^{t}}{\text{Total Cost}}, \quad r = (1+\text{reinvest})^{1/12}-1$$
+        $\text{NP}_t$ is the real monthly net profit; $r$ comes from the **Reinvestment rate** slider. At $0\%$ Capital Velocity equals plain ROI; higher rates reward earlier profit more strongly.
+
+        #### 2. Value Creation Rating — bottleneck: time / execution capacity
+        Net profit per month of duration. Costs are subtracted in the numerator but **not** normalised in the denominator, so it is "capital-binding-blind" and assumes an even profit distribution over the duration:
+        $$\text{Value Creation Rating} = \frac{\text{Net Profit}}{\text{Duration}}$$
+
+        #### 3. Return on Investment (ROI) — bottleneck: capital
+        Capital efficiency — profit per invested CHF; the classic budget-selection (knapsack) heuristic, blind to *when* the return arrives:
         $$\text{ROI} = \frac{\text{Total Net Profit}}{\text{Total Cost}}$$
         """)
-        
-    with st.expander("Multi-Constraint Portfolio Optimization & Parallel Scheduling", expanded=False):
+
+    with st.expander("Capital Recycling & Reinvestment (Execution Strategy)", expanded=False):
         st.markdown(r"""
-        Under the **Execution Strategy** page, the platform schedules projects dynamically based on resource and cash flow constraints:
-        
-        - **Total Available Budget Constraint**:
-          $$\sum_{i \in \text{Selected}} \text{Total Cost}_i \le \text{Total Budget}$$
-        - **Monthly Spending Limit Constraint**:
-          $$\sum_{i \in \text{Active}(t)} \text{Monthly Spend}_{i, t} \le \text{Max Monthly Spending Limit}$$
-        - **Concurrency Constraint**:
-          $$|\text{Active}(t)| \le \text{Max Concurrency Limit}$$
-          
-        *Note: In Parallel mode, the scheduling algorithm operates greedily down the priority list, dynamically sliding projects to start as early as possible (from Month 1 onwards) without violating the overlapping monthly spend or concurrency constraints.*
+        The **Capital over Time with Reinvestment** chart plots how a starting pot of capital grows as project returns are reinvested — one line per method.
+
+        - The **Total Budget acts as the starting capital of a revolving pool**, not as a spending cap.
+        - Each month the next project in the ranking starts as soon as the free capital covers its total cost; its business value then flows back into the pool month by month during the gain phase, funding the next projects sooner.
+        - The ranking that frees capital fastest compounds fastest — e.g. with a 2.5M start a cumulative ~48.9M can be invested as the same francs are recycled again and again.
+        - *Note: this revolving-pool logic is unique to this chart; everywhere else the budget acts as a cumulative spending limit without refill.*
+        """)
+
+    with st.expander("Estimation Cost Buffer", expanded=False):
+        st.markdown(r"""
+        A global contingency (0–10 %) added on top of every project's cost to reflect estimation uncertainty. It flows into ranking, scheduling and every analysis:
+        $$\text{Effective Cost} = \text{Total Cost} \times (1 + \text{buffer})$$
+        """)
+
+    with st.expander("Multi-Constraint Portfolio Optimization & Scheduling", expanded=False):
+        st.markdown(r"""
+        Under the **Execution Strategy** page the scheduler processes the ranked list greedily in one of two modes. In **both** modes the Total Budget caps which projects get funded — a project is skipped once the cumulative cost of the funded set would exceed it.
+
+        **Sequential mode** — projects run strictly back-to-back in rank order:
+        $$\text{Start Month}_i = \sum_{j<i} \text{Duration}_j + 1$$
+
+        **Parallel mode** — projects overlap; each is slid to the earliest start month that satisfies, for every active month $t$:
+        $$\sum_{j \in \text{Selected}} \text{Total Cost}_j \le \text{Total Budget}$$
+        $$\text{Monthly Cost}_{i,t} + \sum_{k \in \text{Active}(t)} \text{Monthly Cost}_{k,t} \le \text{Max Monthly Spend}$$
+        $$|\text{Active}(t)| \le \text{Max Concurrency}$$
+
+        *Safeguard: a project whose cost in any single month already exceeds the monthly cap can never fit and is filtered out beforehand (prevents infinite sliding loops).*
         """)
 
     with st.expander("Risk & Robustness Analysis Methodology", expanded=False):
         st.markdown(r"""
-        To deal with estimation uncertainty, the platform provides advanced simulation features:
-        
+        To deal with estimation uncertainty, the **Robustness Simulation** page provides two analyses.
+
         #### 1. Monte Carlo Risk Simulation
-        We apply random perturbations to monthly business value and monthly costs:
-        - $\text{Value}_t \sim \text{Normal}(\mu_v, \sigma_v)$
-        - $\text{Cost}_t \sim \text{Normal}(\mu_c, \sigma_c)$
-        
-        Key Outputs:
-        - **P10 (Worst Case)**: 10% probability that the net profit will fall below this value.
-        - **P50 (Expected)**: Median outcome of the simulation.
-        - **P90 (Best Case)**: 90% probability that the net profit will be below this value (or 10% chance to exceed it).
-        - **Probability of Loss**: The percentage of iterations where cumulative net profit is less than 0.
-        
-        #### 2. Sensitivity Analysis (Tornado Chart)
-        Measures the impact of a $\pm X\%$ shift in each driver (Value, Direct Cost, FTE Cost, Concurrency limit, etc.) on the total portfolio net profit. Drivers are ordered by the magnitude of their swing.
-        
-        #### 3. Rank Stability
-        Runs multiple prioritization passes under random variance and calculates:
-        - **Spearman Rank Correlation**: Average correlation coefficient between the baseline priority list and the perturbed lists (value close to 1.0 indicates stable priority order).
-        - **Top-N Retention**: The average percentage of baseline Top-N projects that remain in the Top-N after random noise is applied.
+        Each project's monthly business value and cost are perturbed by multiplicative Gaussian noise (run on the whole portfolio or a single project):
+        $$\widetilde{BV}_t = BV_t \cdot \varepsilon^{v}_t, \quad \widetilde{C}_t = C_t \cdot \varepsilon^{c}_t, \quad \varepsilon \sim \text{Normal}(1, \sigma)$$
+        Outputs over thousands of iterations:
+        - **P10 (Worst Case)**: 10 % chance net profit falls below this value.
+        - **P50 (Expected)**: the median outcome.
+        - **P90 (Best Case)**: 90 % chance net profit is below this value (10 % chance to exceed it).
+        - **Probability of Loss**: the share of iterations where total net profit is below 0.
+
+        #### 2. Rank Stability
+        The same noise is applied, but the whole portfolio is **re-ranked** every iteration:
+        - **Rank stability (Spearman correlation)**: average correlation between the baseline ranking and the perturbed rankings (close to 1.0 = stable order).
+        - **Top-N Retention**: the average share of the baseline Top-N projects that stay in the Top-N under noise.
         """)
 
     with st.expander("Interdepartmental Alignment Score (OAS)", expanded=False):
         st.markdown(r"""
-        Successful implementation requires buy-in from multiple departments. The **Department Alignment** page aggregates buy-in scores (1-10 scale) from four core business units:
-        
-        - **Finance**: Evaluates NPV, ROI, and budget alignment.
-        - **IT/R&D**: Evaluates technical feasibility and resource capacity.
-        - **Sales/Marketing**: Evaluates commercial readiness and customer value.
-        - **Operations**: Evaluates delivery complexity and supply chain impact.
-        
-        The **Org Alignment Score (OAS)** is the average of these ratings:
+        The OAS measures how **evenly the funded portfolio serves all four departments** — computed from the portfolio's **objective KPIs, not from opinions**. Each department scores 0–10:
+        - **Finance** — the funded portfolio's return on capital, capped at 10: $\min(10,\ \sum \text{NP} / \sum \text{Total Cost})$.
+        - **IT/R&D, Sales/Marketing, Operations** — the share of funded business value in that department's project types: $10 \times \left(\sum_{i \in \text{Dept types}} \text{BV}_i\right) / \left(\sum_i \text{BV}_i\right)$.
+
+        The OAS is the average of the four scores:
         $$\text{OAS} = \frac{\text{Finance} + \text{IT/R\&D} + \text{Sales/Marketing} + \text{Operations}}{4}$$
-        
-        OAS thresholds:
-        - **OAS $\ge 8.0$**: Strong Alignment
-        - **$6.0 \le$ OAS $< 8.0$**: Moderate Alignment
-        - **OAS $< 6.0$**: Needs Review
+
+        Archetypes per department: **IT/R&D** = Tool R&D, Software Platform, Digital Transformation · **Sales/Marketing** = Marketing Campaign, Software Platform · **Operations** = Manufacturing Process Improvement, Supply Chain Optimization, Sustainability / Compliance, Training & Enablement.
+
+        Thresholds:
+        - **OAS $\ge 7.0$**: Well balanced
+        - **$4.0 \le$ OAS $< 7.0$**: Moderately balanced
+        - **OAS $< 4.0$**: Heavily concentrated
+
+        *Separately, the page hosts a subjective **Collaboration Workspace** where stakeholders submit buy-in ratings (1–10) and comments — complementary to, and kept distinct from, the fact-based OAS above — plus a **Stakeholder Report** export.*
+        """)
+
+    with st.expander("Adding Projects & Value Curves", expanded=False):
+        st.markdown(r"""
+        Projects can be added in two modes (Add Project page).
+
+        **Detailed mode** — enter the monthly business value, direct cost and FTE count directly; the tool derives monthly cost, net profit, the totals and the break-even month.
+
+        **High-level mode** — enter totals and ranges; the total business value is spread across the gain-phase months by a **value-curve shape** $s_t$ (weights summing to 1):
+        $$\text{BV}_t = \text{Total Value} \times s_t, \qquad \sum_t s_t = 1$$
+        The curve is auto-selected from the archetype (its typical shape) or chosen manually from: Linear ramp, Accelerating, Plateau, Sharp peak then decay, S-curve adoption, Slow steady.
         """)
 
 elif current_page == 'Copilot':
