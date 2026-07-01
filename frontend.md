@@ -17,87 +17,67 @@ The app opens automatically in your browser at `http://localhost:8501`. On the v
 
 ## Page Layout & Navigation
 
-Every screen shares the same responsive shell:
+A left **sidebar** carries the co-branded logos, the **page navigation** (a radio list), and the collapsible **Controls & Parameters** panel. The main area shows a brand header, the four portfolio KPIs (always visible), and the active page:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  Title + brand caption                                      │
-│  ┌───────────┬──────────────┬────────────┬──────────────┐   │
-│  │ Selected  │ Total Value  │ Total Cost │ Cumulative NP│   │ ← Selected portfolio KPIs (always visible)
-│  └───────────┴──────────────┴────────────┴──────────────┘   │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │ Tabs: Dash | Rank | Details | Risk | Sim | AI | Hub   │  │ ← Executive Navigation
-│  └───────────────────────────────────────────────────────┘  │
-│                                                             │
-│  [active tab content with smooth slide-up fade-in effects]  │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────┬──────────────────────────────────────────────┐
+│  Sidebar     │  Project Prioritization Prototype  ·  <Page>  │
+│  • Logos     │  ┌─────────┬────────────┬──────────┬────────┐ │
+│  • Navigation│  │Selected │ Total Value│Total Cost│Cum. NP │ │ ← KPIs (always visible)
+│  • Controls &│  └─────────┴────────────┴──────────┴────────┘ │
+│    Parameters│                                               │
+│              │  [active page content]                        │
+└──────────────┴──────────────────────────────────────────────┘
 ```
 
-A **Sidebar** on the left contains weights and optimization controls.
+**Pages:** Portfolio Overview · Project Details · Robustness Simulation · Execution Strategy · Department Alignment · Add Project · Copilot · User Guide.
 
 ---
 
-## Sidebar Controls
+## Sidebar Controls (Parameter Center)
 
-### 🚀 Scoring Weights & Prioritization
-- **Weight: Total Net Profit**: Primary signal (0.0 to 1.0) governing return-on-investment size.
-- **Weight: Break-Even Speed**: Tiebreaker speed score weight.
-- **Prioritization Algorithm**: Select between:
-  - **Composite**: Weighted combination of normalized Net Profit and Speed Score.
-  - **Hilti Value Creation Rating**: Hilti's official formula. Ranks by `Net Profit / Duration`.
-  - **ROI (Return on Investment)**: Ranks by `Net Profit / Cost`.
+The collapsible **Controls & Parameters** panel drives every page:
 
-### 🎛️ Prototype Phase 2 & 3 Optimization Constraints
-- **Execution Mode**: Choose **Sequential** (one after another) or **Parallel** (overlapping timelines).
-- **Total Budget Limit**: Cap total expenditure.
-- **Max Monthly Spend Limit**: Limit concurrent monthly expenditures to prevent cash-flow strain.
-- **Max Concurrent Projects**: Cap simultaneous active project timelines.
+- **Reinvestment Rate** (0–60 %/yr): sets how strongly Capital Velocity rewards fast payback (0 % = plain ROI).
+- **Prioritization Algorithm**: choose the ranking method —
+  - **Capital Velocity**: discounted Net Profit / Cost (rewards fast payback, via the reinvestment rate).
+  - **Value Creation Rating**: Net Profit / Duration.
+  - **ROI**: Net Profit / Cost.
+- **Estimation Cost Buffer** (0–10 %): a contingency added on top of every project's cost.
+- **Budget**: a Total Budget limit and an optional Max Monthly Spend limit (drive the scheduler / funded selection).
+- **Execution Plan**: Sequential vs. Parallel execution, plus an optional Max parallel projects cap.
+- **Portfolio Generator**: regenerate the sample portfolio from a chosen seed and project count, optionally forcing a custom project-duration range.
 
 ---
 
-## Executive Tabs
+## Pages
 
-### 📊 Dashboard
-Displays a high-level summary of the currently **selected** optimized portfolio:
-- **Archetype Pie Chart**: A clean red-gradient donut distribution of projects by business area.
-- **Break-Even Distribution**: Histogram plotting when projects reach profitability.
-- **Cost vs. Value Bubble Plot**: Displays direct cost on the x-axis, business value on the y-axis, and project duration as bubble size. Includes a diagonal parity line for instant break-even visual inspection.
-
-### 📋 Ranking
-The master prioritized table:
-- **Selection Status Indicator (✅/❌)**: Displays if a project fits within the current optimization limits.
-- **Checkbox Filter**: Switch on `"Show selected projects only"` to isolate scheduled projects.
-- **Flexible Filters**: Sliders for duration, net profit, and archetype selectors.
+### 📊 Portfolio Overview
+- **Ranking — Cumulative Net Profit over Time**: one line per top-N ranked project; circled rank badge, solid = funded / dashed = not funded, dashed zero line = break-even.
+- **Prioritized projects table**: rank, funded flag (✅/❌), ID, name, archetype, duration, business value, total cost, net profit, break-even (filterable by archetype/duration/net profit; CSV export).
 
 ### 📈 Project Details
-Inspect individual timelines:
-- **Timeseries Charts**: Select multiple projects to plot cumulative/monthly profits, monthly business value, total cost, or active FTE headcounts.
-- **Executive Summaries**: Slide-up tables repeating financial properties.
-- **Stakeholder Report Generator**: Downloadable sharing summaries.
+- **Project KPIs over time**: plot any metric — cumulative / discounted-cumulative / monthly net profit, monthly business value, monthly cost, direct cost, effort cost, FTE count — for one or more selected projects.
+- **Portfolio composition**: archetype donut + break-even-month histogram of the funded portfolio.
 
-### 🎲 Risk (Monte Carlo Simulation)
-Stress-test individual projects against economic shocks:
-- **Gaussian Noise Engine**: Runs thousands of simulations with random volatility applied to costs and values.
-- **Confidence Intervals**: Displays P10 (worst case), P50 (expected), and P90 (best case) profit curves.
-- **Probability of Loss**: Renders a gauge displaying the statistical chance the project fails to break even.
+### 🎲 Robustness Simulation
+- **Monte Carlo**: perturbs monthly value & cost to produce a net-profit distribution (P10 / P50 / P90, probability of loss) for the whole portfolio or a single project.
+- **Rank Stability**: re-ranks under noise → Spearman rank correlation and Top-N retention, with a per-project rank-range plot.
 
-### 🕹️ Scenario Simulation
-Run sequential vs. parallel portfolio timelines side-by-side:
-- **Scenario Metrics Grid**: Compares completion times, costs, net profit yields, and return-on-investments.
-- **Trajectory Charts**: Dual lines showing cumulative profit growth, FTE utilization concurrency, and a horizontal budget limit line mapping expenditures over time.
+### 🗓️ Execution Strategy
+- **Capital over Time with Reinvestment**: capital-recycling comparison of the three methods.
+- **Sequential vs. Parallel**: time-to-completion, cumulative net-profit growth, FTE/spend utilisation, and a Gantt timeline ordered by priority rank.
 
-### 💬 AI Portfolio Copilot (Phase 3)
-A 100% local, zero-API natural language portfolio consultant:
-- **Comparison Engine**: Type `"Compare P-0001 and P-0002"` to render side-by-side metric sheets.
-- **What-If Constraint Sandbox**: Type `"What if we limit budget to 15M CHF?"` to programmatically run scheduling simulations and output dropped vs. kept lists.
-- **Corporate Advisory Notes**: Provides automated consulting insights based on composite scoring logic.
+### 🤝 Department Alignment
+- **Fact-based OAS + radar**: department scores computed from the funded portfolio's KPIs (not opinions).
+- **Collaboration Workspace**: subjective buy-in reviews and a colour-coded discussion log, plus a downloadable stakeholder report.
 
-### 🤝 Interdepartmental Alignment Hub (Phase 3)
-A collaborative, cross-functional workspace tracking corporate consensus:
-- **Organizational Alignment Score (OAS)**: Aggregates real-time ratings (Finance, IT, Sales, Operations) across selected projects.
-- **Consensus Radar Chart**: Custom Plotly polar visualization showing departmental buy-in.
-- **Feedback Forms**: Real-time review submissions saving rating points and timestamps directly to the JSON store.
-- **Chronological Discussion Log**: Beautifully formatted chat bubble threads sorted by department.
+### ➕ Add Project
+- **Detailed mode**: enter monthly business value, direct cost and FTE count; the tool derives the rest.
+- **High-level mode**: enter totals; the value is spread across the months by a chosen/auto value-curve shape.
+
+### 💬 Copilot
+- A 100 % local, rule-based assistant: compare projects, run what-if budget scenarios, and explain ranking drivers — nothing leaves the tool.
 
 ### 📖 User Guide
-A formal methodology manual featuring LaTeX equations for algorithms and active resource optimization math.
+- In-app documentation of the logic, formulas and visualisations behind every page.
