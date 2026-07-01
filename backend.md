@@ -6,7 +6,7 @@ This document explains the numbers, formulas, constraints, and scheduling algori
 |---|---|
 | `models.py` | Project data model + KPI math + CSV persistence layer |
 | `data_generator.py` | Generates a realistic sample portfolio calibrated to Hilti's scale |
-| `prioritization.py` | Scoring algorithms (Composite, WSJF, ROI) + Multi-Constraint Scheduler |
+| `prioritization.py` | Scoring algorithms (Capital Velocity, Value Creation Rating, ROI) + scheduler + reinvestment & robustness simulations |
 | `data/projects_meta.csv` | Project static metadata |
 | `data/projects_monthly.csv` | Monthly timeseries values (Direct Cost, FTE Count, Business Value) |
 | `data/department_reviews.json` | Cross-departmental reviews and buy-in comments store |
@@ -47,20 +47,27 @@ Implemented as `@property` methods on the `Project` dataclass:
 
 Projects are scored and ranked descending based on the user's selected algorithm:
 
-### A. Composite Score (Hilti Default)
-Combines normalized lifetime net profit yield and time-to-value speed:
-$$\text{composite}[i] = w_{\text{value}} \cdot \text{value\_norm}[i] + w_{\text{speed}} \cdot \text{speed\_score}[i]$$
-Where:
-- $\text{value\_norm}[i] = \frac{\text{Total\_NP}[i] - \min(\text{Total\_NP})}{\max(\text{Total\_NP}) - \min(\text{Total\_NP})}$
-- $\text{speed\_score}[i] = \max(0, 1 - \frac{\text{break\_even\_month}[i] - 1}{\text{duration}[i]})$
+All three methods follow the same pattern — **profit per unit of a scarce resource**; the denominator reveals the bottleneck the method optimises for. In every case **Net Profit (NP) = Business Value − Costs = Business Value − (Direct Cost + Effort)**.
 
-### B. Hilti Value Creation Rating
-Hilti's official priority formula — net profit per unit of time (an alias `WSJF` is still accepted internally for backward compatibility):
+### A. Capital Velocity (Default) — bottleneck: capital + time
+Discounted net profit **per CHF invested** — a time-aware ROI that rewards fast payback, because money returned sooner can be reinvested into the next projects sooner:
+$$\text{Capital Velocity}[i] = \frac{\sum_{t=1}^{D_i} \text{NP}_i[t] \,/\, (1+r)^{t}}{\text{Total Cost}[i]}, \qquad r = (1+\text{reinvest})^{1/12} - 1$$
+Where $\text{NP}_i[t]$ is the project's **real monthly net profit** (not an average) and $r$ is the monthly rate derived from the **Reinvestment rate** slider (default 30 %/yr). At reinvest = 0 % Capital Velocity reduces **exactly to ROI**; a higher rate increasingly rewards early payback. It is therefore a tunable generalisation of ROI that also accounts for the timing of cash returns.
+
+The **Execution Strategy** page visualises this with a capital-recycling simulation (`simulate_reinvestment`): the Total Budget is treated as the **starting capital of a revolving pool** — project returns flow back monthly and fund the next projects, so the ranking that frees capital fastest compounds fastest.
+
+### B. Value Creation Rating — bottleneck: time / execution capacity
+Net profit per unit of time (an alias `WSJF` is still accepted internally for backward compatibility). Costs are subtracted in the numerator but **not** normalised in the denominator, so it is "capital-binding-blind" and assumes an even profit distribution over the duration:
 $$\text{Value Creation Rating}[i] = \frac{\text{Net Profit}[i]}{\text{Duration}[i]} = \frac{\text{Business Value}[i] - \text{Costs}[i]}{\text{Duration}[i]}$$
 
-### C. ROI (Return on Investment)
-Ranks projects based on cost-efficiency:
+### C. ROI (Return on Investment) — bottleneck: capital
+Ranks projects based on cost-efficiency (blind to *when* the return arrives):
 $$\text{ROI}[i] = \frac{\text{Total Net Profit}[i]}{\text{Total Cost}[i]}$$
+
+### D. Estimation Cost Buffer
+A global contingency set by a sidebar slider (0–10 %) is applied on top of every project's cost before scoring and scheduling, via `models.apply_cost_buffer`:
+$$\text{Effective Cost} = \text{Total Cost} \times (1 + \text{buffer})$$
+It flows through into net profit, break-even, the ranking and the scheduler.
 
 ---
 
@@ -86,9 +93,24 @@ Projects overlap dynamically. The optimizer greedily slots projects down the pri
 
 ---
 
-## 4. Collaborative Reviews Storage
+## 4. Risk & Robustness Simulations (`prioritization.py`)
 
-Cross-departmental buy-in comments and ratings are persisted inside `data/department_reviews.json` using the following schema:
+Two Monte-Carlo simulations stress-test the result under estimation uncertainty:
+
+- **`simulate_portfolio_profit`** — perturbs each project's monthly business value and cost by multiplicative Gaussian noise ($\varepsilon \sim \mathcal{N}(1,\sigma)$) over many iterations and returns the distribution of total net profit: P10 / P50 / P90 and the **probability of loss** (share of iterations below 0).
+- **`simulate_rank_stability`** — applies the same noise but **re-ranks** the portfolio every iteration, returning the average **Spearman rank correlation** vs. the baseline ranking and the **Top-N retention** (share of the baseline Top-N that stays in the Top-N).
+
+---
+
+## 5. Department Alignment — fact-based OAS
+
+The Organizational Alignment Score and radar are computed from the **funded portfolio's objective KPIs, not from opinions**. Each department scores 0–10: **Finance** = portfolio ROI (capped at 10); **IT/R&D, Sales/Marketing, Operations** = the share of funded business value in that department's archetypes. The **OAS** is the average of the four. (Thresholds: ≥ 7 well balanced, ≥ 4 moderately balanced, otherwise heavily concentrated.)
+
+---
+
+## 6. Collaborative Reviews Storage
+
+Separately, the **subjective** buy-in reviews (the Collaboration Workspace, distinct from the fact-based OAS) are persisted inside `data/department_reviews.json` using the following schema:
 
 ```json
 {
