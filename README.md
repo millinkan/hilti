@@ -4,13 +4,13 @@ Welcome to the **Hilti Project Prioritization & Optimization Platform**. This co
 
 ## ✨ Key Features
 
-- **📊 Executive Dashboard**: High-level overview of portfolio KPIs (Cumulative Net Profit, Break-Even distributions, Cost vs. Value analysis).
-- **📋 Dynamic Ranking Engine**: Prioritize projects on the fly using multiple methodologies (Composite, WSJF, ROI).
-- **🕹️ Scenario Simulation**: Compare *Sequential* vs. *Parallel* execution modes. Apply total budget limits, monthly spending caps, and resource concurrency constraints.
-- **🎲 Monte Carlo Risk Analysis**: Run thousands of simulations to identify P10 (Worst Case), P50 (Expected), and P90 (Best Case) outcomes for individual projects.
-- **🤝 Interdepartmental Hub**: Foster transparency across Finance, IT, Sales, and Operations. Track Organization Alignment Scores (OAS) and resolve cross-functional blockers.
-- **🤖 AI Portfolio Copilot**: Built-in chatbot for immediate insights. Compare projects instantly or run natural language what-if budget simulations (e.g., *"What if budget is 54,000,000 CHF?"*).
-- **➕ Project Generation**: Easily add detailed monthly business cases or use high-level archetype estimates to auto-generate project curves.
+- **📊 Portfolio Overview**: The prioritized portfolio at a glance — a "Cumulative Net Profit over Time" ranking chart, four portfolio KPIs, and a filterable projects table.
+- **📈 Project Details**: Plot any KPI (cumulative / discounted net profit, business value, costs, FTE count) per project, plus archetype and break-even composition charts.
+- **🎲 Robustness Simulation**: Monte Carlo on the whole portfolio or a single project (P10 / P50 / P90, probability of loss) plus rank-stability analysis (Spearman correlation, Top-N retention).
+- **🗓️ Execution Strategy**: Compare the three prioritization methods and a capital-recycling simulation, plus *Sequential* vs. *Parallel* execution under budget, monthly-spend and concurrency limits.
+- **🤝 Department Alignment**: A fact-based Organization Alignment Score (OAS) and radar, plus a collaborative review/discussion workspace and a stakeholder report export.
+- **🤖 Copilot**: A 100% local, rule-based assistant — compare projects, explain ranking drivers, or run natural-language what-if budget simulations (e.g., *"What if budget is 20,000,000 CHF?"*).
+- **➕ Add Project**: Add a detailed monthly business case, or high-level estimates auto-spread into a realistic monthly profile via archetype value curves.
 
 ## 🚀 Getting Started
 
@@ -53,9 +53,11 @@ Your default web browser will automatically open the dashboard (usually at `http
 
 ## 🧮 Prioritization Methodologies
 
-- **Composite Score**: Blends financial yield and time-to-value speed (`w_profit * NP + w_speed * Speed Factor`).
-- **WSJF (Weighted Shortest Job First)**: Prioritizes high-value, fast-turnaround projects (`Business Value / Duration`).
-- **ROI (Return on Investment)**: Ranks projects based on financial cost-efficiency (`Total Net Profit / Total Cost`).
+All three rank by "profit per unit of a scarce resource"; the denominator sets the bottleneck:
+
+- **Capital Velocity** (default): discounted net profit per CHF invested — a time-aware ROI tuned by a reinvestment rate (`Σ NPₜ/(1+r)ᵗ / Total Cost`). At 0% it equals plain ROI.
+- **Value Creation Rating**: net profit per month of duration (`Net Profit / Duration`).
+- **ROI (Return on Investment)**: net profit per franc invested (`Total Net Profit / Total Cost`).
 
 ---
 *Built for the Hilti Innovation Lab.*
